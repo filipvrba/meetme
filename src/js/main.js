@@ -4,4 +4,5 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "../css/style.css";
 import "./core";
 import "./elements";
+import "./math";
 document.querySelector("#app").innerHTML = "<elm-priority-routes></elm-priority-routes>"

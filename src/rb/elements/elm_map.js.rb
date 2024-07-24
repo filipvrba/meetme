@@ -1,26 +1,51 @@
 import 'maplibregl', 'maplibre-gl'
 import ['ENV'], '../env'
 
+import 'CGeolocation', '../components/elm-map/geolocation'
+import 'CAnimations', '../components/elm-map/animations'
+
 export default class ElmMap < HTMLElement
   def initialize
     super
+
+    @c_animations = CAnimations.new
     
     init_elm()
   end
 
   def connected_callback()
+    @c_animations.connected_callback()
+    
+    c_geolocation = CGeolocation.new
+    
     @map = maplibregl.Map.new({
       container: 'map',
       style: "https://api.maptiler.com/maps/streets-v2/style.json?key=#{ENV::VITE_API_KEY_MAPTILER}",
-      center: [0, 0],  # starting position [lng, lat]
-      zoom: 1
+      center: [0, 0],
+      zoom: 15
     })
-    # map.set_zoom(10)
 
-    update_geolocation()
+    c_geolocation.get_position() do |position|
+      @map.set_center([position.x, position.y])
+    end
+
+    # @map.on('load', lambda do
+    
+    #   c_geolocation.get_position() do |position|
+    #     m_old_position = @map.get_center()
+    #     m_old_position = Vector.new(m_old_position.lng, m_old_position.lat)
+  
+    #     # @map.set_zoom(15)
+    #     @c_animations.move_position(position, m_old_position) do |lerp_position|
+    #       @map.set_center([lerp_position.x, lerp_position.y])
+    #     end
+    #   end
+
+    # end)
   end
 
   def disconnected_callback()
+    @c_animations.disconnected_callback()
   end
 
   def init_elm()
@@ -29,25 +54,5 @@ export default class ElmMap < HTMLElement
     """
 
     self.innerHTML = template
-  end
-
-  def update_geolocation()
-    if navigator.geolocation
-      navigator.geolocation.get_current_position(geolocation_success, geolocation_error)
-    else
-      alert("Geolocation is not supported by this browser.")
-    end
-  end
-
-  def geolocation_success(position)
-    lng = position.coords.longitude
-    lat = position.coords.latitude
-
-    @map.set_center([lng, lat])
-    @map.set_zoom(20);
-  end
-
-  def geolocation_error()
-    alert("Unable to retrieve your location.")
   end
 end
