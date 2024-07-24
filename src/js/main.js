@@ -1,3 +1,6 @@
+import "../css/bootstrap.min.css";
+import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 import "../css/style.css";
 import "./core";
-document.querySelector("#app").innerHTML = "<h1>Hello RubyJS</h1>"
+import "./elements";
+document.querySelector("#app").innerHTML = "<elm-priority-routes></elm-priority-routes>"
