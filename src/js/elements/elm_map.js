@@ -2,27 +2,23 @@ import maplibregl from "maplibre-gl";
 import { ENV } from "../env";
 import CGeolocation from "../components/elm-map/geolocation";
 import CAnimations from "../components/elm-map/animations";
+import CMarkers from "../components/elm-map/markers";
 
 export default class ElmMap extends HTMLElement {
   constructor() {
     super();
+
+    this._hLoadMap = () => {
+      return this.loadedMap()
+    };
+
+    this._cGeolocation = new CGeolocation;
     this._cAnimations = new CAnimations;
     this.initElm()
   };
 
-  // @map.on('load', lambda do
-  //   c_geolocation.get_position() do |position|
-  //     m_old_position = @map.get_center()
-  //     m_old_position = Vector.new(m_old_position.lng, m_old_position.lat)
-  //     # @map.set_zoom(15)
-  //     @c_animations.move_position(position, m_old_position) do |lerp_position|
-  //       @map.set_center([lerp_position.x, lerp_position.y])
-  //     end
-  //   end
-  // end)
   connectedCallback() {
     this._cAnimations.connectedCallback();
-    let cGeolocation = new CGeolocation;
 
     this._map = new maplibregl.Map({
       container: "map",
@@ -31,13 +27,25 @@ export default class ElmMap extends HTMLElement {
       zoom: 15
     });
 
-    return cGeolocation.getPosition(position => (
-      this._map.setCenter([position.x, position.y])
-    ))
+    this._map.on("load", this._hLoadMap);
+    this._cMarkers = new CMarkers(this._map);
+    return this._cMarkers
   };
 
   disconnectedCallback() {
     return this._cAnimations.disconnectedCallback()
+  };
+
+  loadedMap() {
+    return this._cGeolocation.getPosition((position) => {
+      this._map.setCenter([position.x, position.y]);
+
+      return this._cMarkers.add({
+        position,
+        id: 0,
+        src: "https://avatars.githubusercontent.com/u/49731748?v=4"
+      })
+    })
   };
 
   initElm() {
