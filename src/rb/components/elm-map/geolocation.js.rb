@@ -21,7 +21,7 @@ export default class CGeolocation
     @callback_position.call(position) if @callback_position
   end
 
-  def error()
-    alert("Unable to retrieve your location.")
+  def error(message)
+    alert("Unable to retrieve your location (#{message.code}).")
   end
 end

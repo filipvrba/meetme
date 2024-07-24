@@ -24,7 +24,7 @@ export default class CGeolocation {
     if (this._callbackPosition) return this._callbackPosition(position)
   };
 
-  error() {
-    return alert("Unable to retrieve your location.")
+  error(message) {
+    return alert(`Unable to retrieve your location (${message.code}).`)
   }
 }
