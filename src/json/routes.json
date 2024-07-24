@@ -1,14 +1,19 @@
 {
-    "pages": [
-      {
-        "title": "Error",
-        "endpoint": "error",
-        "priority": 0
-      },
-      {
-        "title": "Úvod",
-        "endpoint": "uvod",
-        "priority": 10
-      }
-    ]
-  }
+  "pages": [
+    {
+      "title": "Error",
+      "endpoint": "error",
+      "priority": 0
+    },
+    {
+      "title": "Úvod",
+      "endpoint": "uvod",
+      "priority": 10
+    },
+    {
+      "title": "Mapa",
+      "endpoint": "mapa",
+      "priority": 1
+    }
+  ]
+}
