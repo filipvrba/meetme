@@ -14,6 +14,11 @@
       "title": "Mapa",
       "endpoint": "mapa",
       "priority": 1
+    },
+    {
+      "title": "Registrace",
+      "endpoint": "signup",
+      "priority": 1
     }
   ]
 }
