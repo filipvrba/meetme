@@ -13,28 +13,42 @@ export default class CDatabase {
     let query = `SELECT id FROM users WHERE email='${email}' AND hash_password='${hashPassword}';`;
 
     return _BefDb.get(query, (rows) => {
+      let userId;
+      this._element.setSpinnerDisplay(false);
       let isSignin = rows.length > 0;
 
       if (isSignin) {
-        let userId = rows[0].id;
-        if (callback) callback(userId)
+        userId = rows[0].id;
+        if (callback) return callback(userId)
       } else {
-        Events.emit("#app", ElmAlert.ENVS.SHOW, {
+        return Events.emit("#app", ElmAlert.ENVS.SHOW, {
           endTime: 15,
           message: `${`\n          <i class='bi bi-x-circle me-2'></i> Nepodařilo se přihlásit! Možné důvody: Špatný email nebo špatné heslo.\n          `}`,
           style: "danger"
         })
-      };
-
-      return this._element.setSpinnerDisplay(false)
+      }
     })
   };
 
   addToken(options, callback) {
-    let query = `INSERT INTO tokens (user_id, token, expires_at) VALUES (${options.id}, '${options.token}', '${options.date}')`;
+    this._element.setSpinnerDisplay(true);
 
-    return _BefDb.set(query, (isWrite) => {
-      if (isWrite) if (callback) return callback.call()
+    return this.cleanUpTokens(() => {
+      let query = `INSERT INTO tokens (user_id, token, expires_at) VALUES (${options.id}, '${options.token}', '${options.date}');`;
+
+      return _BefDb.set(query, (isWrite) => {
+        this._element.setSpinnerDisplay(false);
+        if (isWrite) if (callback) return callback.call()
+      })
+    })
+  };
+
+  cleanUpTokens(callback) {
+    let currentTime = new Date().toISOString();
+    let query = `DELETE FROM tokens WHERE expires_at < '${currentTime}';`;
+
+    return _BefDb.set(query, (isCleanUp) => {
+      if (callback) return callback.call()
     })
   }
 }
