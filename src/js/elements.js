@@ -8,4 +8,6 @@ window.customElements.define("elm-marker-avater", ElmMarkerAvater);
 import ElmSignup from "./elements/elm_signup";
 window.customElements.define("elm-signup", ElmSignup);
 import ElmAlert from "./elements/elm_alert";
-window.customElements.define("elm-alert", ElmAlert)
+window.customElements.define("elm-alert", ElmAlert);
+import ElmSignin from "./elements/elm_signin";
+window.customElements.define("elm-signin", ElmSignin)

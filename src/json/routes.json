@@ -19,6 +19,16 @@
       "title": "Registrace",
       "endpoint": "signup",
       "priority": 1
+    },
+    {
+      "title": "Přihlášení",
+      "endpoint": "signin",
+      "priority": 1
+    },
+    {
+      "title": "Dashboard",
+      "endpoint": "dashboard",
+      "priority": 1
     }
   ]
 }

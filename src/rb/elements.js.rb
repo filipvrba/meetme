@@ -13,3 +13,6 @@ window.custom_elements.define('elm-signup', ElmSignup)
 
 import 'ElmAlert', './elements/elm_alert'
 window.custom_elements.define('elm-alert', ElmAlert)
+
+import 'ElmSignin', './elements/elm_signin'
+window.custom_elements.define('elm-signin', ElmSignin)
