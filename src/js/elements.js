@@ -10,4 +10,6 @@ window.customElements.define("elm-signup", ElmSignup);
 import ElmAlert from "./elements/elm_alert";
 window.customElements.define("elm-alert", ElmAlert);
 import ElmSignin from "./elements/elm_signin";
-window.customElements.define("elm-signin", ElmSignin)
+window.customElements.define("elm-signin", ElmSignin);
+import ElmDashboard from "./elements/elm_dashboard";
+window.customElements.define("elm-dashboard", ElmDashboard)

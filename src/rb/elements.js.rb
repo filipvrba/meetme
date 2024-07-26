@@ -16,3 +16,6 @@ window.custom_elements.define('elm-alert', ElmAlert)
 
 import 'ElmSignin', './elements/elm_signin'
 window.custom_elements.define('elm-signin', ElmSignin)
+
+import 'ElmDashboard', './elements/elm_dashboard'
+window.custom_elements.define('elm-dashboard', ElmDashboard)
