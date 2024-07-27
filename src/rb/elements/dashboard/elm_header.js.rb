@@ -31,7 +31,7 @@ export default class ElmDashboardHeader < HTMLElement
               Přihlášen jako<br><strong>#{email}</strong>
             </li>
             <li><hr class='dropdown-divider'></li>
-            <li><a class='dropdown-item' href='#'>Nastavení</a></li>
+            <li><a id='dashboard-header-settings-link' class='dropdown-item' href='#dashboard-settings'>Nastavení</a></li>
             <li><a class='dropdown-item' href='#'>Odhlásit se</a></li>
           </ul>
         </li>

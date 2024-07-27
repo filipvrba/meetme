@@ -22,3 +22,6 @@ window.custom_elements.define('elm-dashboard', ElmDashboard)
 
 import 'ElmDashboardHeader', './elements/dashboard/elm_header'
 window.custom_elements.define('elm-dashboard-header', ElmDashboardHeader)
+
+import 'ElmDashboardJumbotronAvatar', './elements/dashboard/elm_jumbotron_avatar'
+window.custom_elements.define('elm-dashboard-jumbotron-avatar', ElmDashboardJumbotronAvatar)

@@ -18,4 +18,11 @@ import ElmDashboardHeader from "./elements/dashboard/elm_header";
 window.customElements.define(
   "elm-dashboard-header",
   ElmDashboardHeader
+);
+
+import ElmDashboardJumbotronAvatar from "./elements/dashboard/elm_jumbotron_avatar";
+
+window.customElements.define(
+  "elm-dashboard-jumbotron-avatar",
+  ElmDashboardJumbotronAvatar
 )

@@ -19,7 +19,7 @@ export default class ElmDashboard < AProtectionElement
     template = """
 <elm-dashboard-header user-id='#{@user_id}'></elm-dashboard-header>
 <div class='nav-padding'>
-  
+  <elm-dashboard-jumbotron-avatar user-id='#{@user_id}'></elm-dashboard-jumbotron-avatar>
 </div>
     """
 
