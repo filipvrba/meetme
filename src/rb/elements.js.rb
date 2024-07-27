@@ -25,3 +25,6 @@ window.custom_elements.define('elm-dashboard-header', ElmDashboardHeader)
 
 import 'ElmDashboardJumbotronAvatar', './elements/dashboard/elm_jumbotron_avatar'
 window.custom_elements.define('elm-dashboard-jumbotron-avatar', ElmDashboardJumbotronAvatar)
+
+import 'ElmDashboardAccountSettings', './elements/dashboard/elm_account_settings'
+window.custom_elements.define('elm-dashboard-account-settings', ElmDashboardAccountSettings)

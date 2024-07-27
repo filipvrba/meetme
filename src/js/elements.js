@@ -25,4 +25,11 @@ import ElmDashboardJumbotronAvatar from "./elements/dashboard/elm_jumbotron_avat
 window.customElements.define(
   "elm-dashboard-jumbotron-avatar",
   ElmDashboardJumbotronAvatar
+);
+
+import ElmDashboardAccountSettings from "./elements/dashboard/elm_account_settings";
+
+window.customElements.define(
+  "elm-dashboard-account-settings",
+  ElmDashboardAccountSettings
 )

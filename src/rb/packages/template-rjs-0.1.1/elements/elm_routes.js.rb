@@ -24,7 +24,6 @@ export default class ElmRoutes < HTMLElement
   def find_current_page()
     ROUTES_JSON.pages.each do |page|
       unless page.endpoint == location.hash.sub('#', '')
-                              .gsub('-', '/')
         next
       end
 
@@ -37,7 +36,7 @@ export default class ElmRoutes < HTMLElement
   def init_page(page)
     init_meta(page)
     
-    page_name = page.endpoint.gsub('-', '_')
+    page_name = page.endpoint
     content = PAGES[page_name]
     init_elm(content, page)
   end

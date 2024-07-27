@@ -1,4 +1,5 @@
 import AProtectionElement from "./abstracts/protection_element";
+import CBody from "../components/elm-dashboard/body";
 
 export default class ElmDashboard extends AProtectionElement {
   constructor() {
@@ -6,7 +7,9 @@ export default class ElmDashboard extends AProtectionElement {
   };
 
   initializeProtected() {
-    return this.initElm()
+    this._cBody = new CBody(this._userId);
+    this.initElm();
+    return this._cBody.dashboardUpdate()
   };
 
   connectedCallback() {
@@ -18,12 +21,7 @@ export default class ElmDashboard extends AProtectionElement {
   };
 
   initElm() {
-    let template = `${`
-<elm-dashboard-header user-id='${this._userId}'></elm-dashboard-header>
-<div class='nav-padding'>
-  <elm-dashboard-jumbotron-avatar user-id='${this._userId}'></elm-dashboard-jumbotron-avatar>
-</div>
-    `}`;
+    let template = `${`\n    <elm-dashboard-header user-id='${this._userId}'></elm-dashboard-header>\n    <div id='dashboardBody' class='nav-padding'></div>\n    `}`;
     return this.innerHTML = template
   }
 }

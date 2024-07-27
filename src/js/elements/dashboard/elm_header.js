@@ -2,14 +2,17 @@ export default class ElmDashboardHeader extends HTMLElement {
   constructor() {
     super();
     this._userId = this.getAttribute("user-id");
+    this.initElm();
 
     _BefDb.get(
       `SELECT email FROM users WHERE id = ${this._userId}`,
 
       (rows) => {
-        if (rows.length > 0) return this.initElm(rows[0].email)
+        if (rows.length > 0) return this.initEmail(rows[0].email)
       }
-    )
+    );
+
+    window.dropdownItemSignoutClick = this.dropdownItemSignoutClick.bind(this)
   };
 
   connectedCallback() {
@@ -20,11 +23,15 @@ export default class ElmDashboardHeader extends HTMLElement {
     return null
   };
 
-  initElm(email) {
+  dropdownItemSignoutClick() {
+    return Cookie.erase("l-token")
+  };
+
+  initElm() {
     let template = `${`
 <nav class='navbar navbar-light bg-light'>
   <div class='container-fluid'>
-    <a class='navbar-brand' href='#dashboard'>Dashboard</a>
+    <a class='navbar-brand' onclick='window.dashboardUpdate(0)' href='#dashboard'>Dashboard</a>
     <div class='ms-auto'>
       <ul class='navbar-nav d-flex flex-row'>
         <li class='nav-item dropdown'>
@@ -33,11 +40,11 @@ export default class ElmDashboardHeader extends HTMLElement {
           </a>
           <ul class='dropdown-menu text-small shadow' aria-labelledby='accountDropdown' style='position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);' data-popper-placement='bottom-end'>
             <li class='dropdown-header'>
-              Přihlášen jako<br><strong>${email}</strong>
+              Přihlášen jako<br><strong id='dropdownHeaderEmail'></strong>
             </li>
             <li><hr class='dropdown-divider'></li>
-            <li><a id='dashboard-header-settings-link' class='dropdown-item' href='#dashboard-settings'>Nastavení</a></li>
-            <li><a class='dropdown-item' href='#'>Odhlásit se</a></li>
+            <li><a id='dashboard-header-settings-link' class='dropdown-item' onclick='dashboardUpdate(1)' href='#dashboard'>Nastavení</a></li>
+            <li><a class='dropdown-item'onclick='dropdownItemSignoutClick()' href='#'>Odhlásit se</a></li>
           </ul>
         </li>
       </ul>
@@ -46,5 +53,9 @@ export default class ElmDashboardHeader extends HTMLElement {
 </nav>
     `}`;
     return this.innerHTML = template
+  };
+
+  initEmail(email) {
+    return this.querySelector("#dropdownHeaderEmail").innerHTML = email
   }
 }

@@ -25,11 +25,7 @@ export default class ElmRoutes extends HTMLElement {
 
   findCurrentPage() {
     for (let page of ROUTES_JSON.pages) {
-      if (page.endpoint !== location.hash.replace("#", "").replaceAll(
-        "-",
-        "/"
-      )) continue;
-
+      if (page.endpoint !== location.hash.replace("#", "")) continue;
       return page
     };
 
@@ -38,7 +34,7 @@ export default class ElmRoutes extends HTMLElement {
 
   initPage(page) {
     this.initMeta(page);
-    let pageName = page.endpoint.replaceAll("-", "_");
+    let pageName = page.endpoint;
     let content = PAGES[pageName];
     return this.initElm(content, page)
   };
