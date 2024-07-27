@@ -19,3 +19,6 @@ window.custom_elements.define('elm-signin', ElmSignin)
 
 import 'ElmDashboard', './elements/elm_dashboard'
 window.custom_elements.define('elm-dashboard', ElmDashboard)
+
+import 'ElmDashboardHeader', './elements/dashboard/elm_header'
+window.custom_elements.define('elm-dashboard-header', ElmDashboardHeader)
