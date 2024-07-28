@@ -18,11 +18,16 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
       return this.errorSaveChanges()
     };
 
+    this._hBioInput = () => {
+      return this.bioAutoResize()
+    };
+
     this._userId = this.getAttribute("user-id");
     this.initElm();
     this._fullName = this.querySelector("#dashAccSettingsFullName");
     this._email = this.querySelector("#dashAccSettingsEmail");
     this._bio = this.querySelector("#dashAccSettingsBio");
+    this._mirrorBio = this.querySelector("#dashAccSettingsMirrorBio");
     this._profilePicture = this.querySelector("#dashAccSettingsProfilePicture");
     this._spinnerOverlay = this.querySelector("#dashAccSettingsSpinner");
     window.dashAccSettingsSaveChangesClick = this.dashAccSettingsSaveChangesClick.bind(this);
@@ -32,11 +37,13 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
   };
 
   connectedCallback() {
-    return Events.connect("#app", "befError", this._hBefError)
+    Events.connect("#app", "befError", this._hBefError);
+    return this._bio.addEventListener("input", this._hBioInput)
   };
 
   disconnectedCallback() {
-    return Events.disconnect("#app", "befError", this._hBefError)
+    Events.disconnect("#app", "befError", this._hBefError);
+    return this._bio.removeEventListener("input", this._hBioInput)
   };
 
   errorSaveChanges() {
@@ -47,6 +54,19 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
       message: "Uložení účtu nebylo úspěšné. Pravděpodobnou příčinou chyby je příliš velká profilová fotografie.",
       style: "danger"
     })
+  };
+
+  bioAutoResize() {
+    let styles = window.getComputedStyle(this._bio);
+    this._mirrorBio.style.fontFamily = styles.fontFamily;
+    this._mirrorBio.style.fontSize = styles.fontSize;
+    this._mirrorBio.style.lineHeight = styles.lineHeight;
+    this._mirrorBio.style.padding = styles.padding;
+    this._mirrorBio.style.border = styles.border;
+    this._mirrorBio.style.width = styles.width;
+    this._mirrorBio.textContent = `${this._bio.value}\n`;
+    let mirrorHeight = this._mirrorBio.offsetHeight;
+    return this._bio.style.height = `${mirrorHeight}px`
   };
 
   dashAccSettingsSaveChangesClick() {
@@ -83,7 +103,8 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
       </div>
       <div class='mb-3'>
         <label for='dashAccSettingsBio' class='form-label'>Bio</label>
-        <textarea class='form-control' id='dashAccSettingsBio' rows='3'></textarea>
+        <textarea class='form-control' id='dashAccSettingsBio' rows='1'></textarea>
+        <div id='dashAccSettingsMirrorBio' class='mirror-div'></div>
       </div>
       <div class='mb-3'>
         <label for='dashAccSettingsProfilePicture' class='form-label'>Profilová fotka</label>
@@ -100,7 +121,8 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
   updateInitElm(options) {
     this._fullName.value = options.full_name.decodeBase64();
     this._email.value = options.email;
-    return this._bio.value = options.bio.decodeBase64()
+    this._bio.value = options.bio.decodeBase64();
+    return this.bioAutoResize()
   };
 
   setSpinnerDisplay(isDisabled) {

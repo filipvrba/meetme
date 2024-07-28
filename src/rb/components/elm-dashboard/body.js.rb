@@ -20,8 +20,10 @@ export default class CBody
     case @dashboard_index
     when 1
       return """
-      <elm-alert></elm-alert>
-      <elm-dashboard-account-settings user-id='#{@user_id}'></elm-dashboard-account-settings>
+      <div class='col-lg-8 mx-auto'>
+        <elm-alert></elm-alert>
+        <elm-dashboard-account-settings user-id='#{@user_id}'></elm-dashboard-account-settings>
+      </div>
       """
     else
       return """

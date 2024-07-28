@@ -1,0 +1,17 @@
+#dashAccSettingsBio {
+    width: 100%;
+    overflow: hidden;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.mirror-div {
+    visibility: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}

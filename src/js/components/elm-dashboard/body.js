@@ -18,7 +18,12 @@ export default class CBody {
   _subinitElm() {
     switch (this._dashboardIndex) {
     case 1:
-      return `${`\n      <elm-alert></elm-alert>\n      <elm-dashboard-account-settings user-id='${this._userId}'></elm-dashboard-account-settings>\n      `}`;
+      return `${`
+      <div class='col-lg-8 mx-auto'>
+        <elm-alert></elm-alert>
+        <elm-dashboard-account-settings user-id='${this._userId}'></elm-dashboard-account-settings>
+      </div>
+      `}`;
 
     default:
       return `${`\n      <elm-dashboard-jumbotron-avatar user-id='${this._userId}'></elm-dashboard-jumbotron-avatar>\n      `}`

@@ -8,6 +8,8 @@ export default class ElmDashboardAccountSettings < HTMLElement
   def initialize
     super
     @h_bef_error = lambda { error_save_changes() }
+    @h_bio_input = lambda { bio_auto_resize() }
+
     @user_id     = self.get_attribute('user-id')
 
     init_elm()
@@ -15,6 +17,7 @@ export default class ElmDashboardAccountSettings < HTMLElement
     @full_name       = self.query_selector('#dashAccSettingsFullName')
     @email           = self.query_selector('#dashAccSettingsEmail')
     @bio             = self.query_selector('#dashAccSettingsBio')
+    @mirror_bio      = self.query_selector('#dashAccSettingsMirrorBio')
     @profile_picture = self.query_selector('#dashAccSettingsProfilePicture')
     @spinner_overlay = self.query_selector('#dashAccSettingsSpinner')
 
@@ -30,10 +33,12 @@ export default class ElmDashboardAccountSettings < HTMLElement
 
   def connected_callback()
     Events.connect('#app', 'befError', @h_bef_error)
+    @bio.add_event_listener('input', @h_bio_input)
   end
 
   def disconnected_callback()
     Events.disconnect('#app', 'befError', @h_bef_error)
+    @bio.remove_event_listener('input', @h_bio_input)
   end
 
   def error_save_changes()
@@ -44,6 +49,21 @@ export default class ElmDashboardAccountSettings < HTMLElement
                "chyby je příliš velká profilová fotografie.",
       style: "danger"
     })
+  end
+
+  def bio_auto_resize()
+    styles = window.get_computed_style(@bio)
+    @mirror_bio.style.font_family = styles.font_family
+    @mirror_bio.style.font_size   = styles.font_size
+    @mirror_bio.style.line_height = styles.line_height
+    @mirror_bio.style.padding     = styles.padding
+    @mirror_bio.style.border      = styles.border
+    @mirror_bio.style.width       = styles.width
+
+    @mirror_bio.textContent = "#{@bio.value}\n"
+    mirror_height           = @mirror_bio.offset_height
+
+    @bio.style.height = "#{mirror_height}px"
   end
 
   def dash_acc_settings_save_changes_click()
@@ -80,7 +100,8 @@ export default class ElmDashboardAccountSettings < HTMLElement
       </div>
       <div class='mb-3'>
         <label for='dashAccSettingsBio' class='form-label'>Bio</label>
-        <textarea class='form-control' id='dashAccSettingsBio' rows='3'></textarea>
+        <textarea class='form-control' id='dashAccSettingsBio' rows='1'></textarea>
+        <div id='dashAccSettingsMirrorBio' class='mirror-div'></div>
       </div>
       <div class='mb-3'>
         <label for='dashAccSettingsProfilePicture' class='form-label'>Profilová fotka</label>
@@ -99,6 +120,8 @@ export default class ElmDashboardAccountSettings < HTMLElement
     @full_name.value = options['full_name'].decode_base64()
     @email.value     = options.email
     @bio.value       = options.bio.decode_base64()
+
+    bio_auto_resize()
   end
 
   def set_spinner_display(is_disabled)
