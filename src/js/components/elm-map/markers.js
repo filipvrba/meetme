@@ -16,7 +16,7 @@ export default class CMarkers {
       options.position.y
     ]).addTo(this._map);
 
-    marker.getElement().innerHTML = `${`\n    <elm-marker-avater id-avatar='${options.id}' src='${options.src}'></elm-marker-avater>\n    `}`;
+    marker.getElement().innerHTML = `${`\n    <elm-marker-avater user-id='${options.userId}' src='${options.src}'></elm-marker-avater>\n    `}`;
     return this._markers[options.id] = marker
   }
 }

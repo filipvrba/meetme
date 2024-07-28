@@ -1,11 +1,12 @@
 import 'maplibregl', 'maplibre-gl'
 import ['ENV'], '../env'
 
+import 'AProtectionElement', './abstracts/protection_element'
 import 'CGeolocation', '../components/elm-map/geolocation'
 import 'CAnimations', '../components/elm-map/animations'
 import 'CMarkers', '../components/elm-map/markers'
 
-export default class ElmMap < HTMLElement
+export default class ElmMap < AProtectionElement
   def initialize
     super
 
@@ -39,11 +40,15 @@ export default class ElmMap < HTMLElement
     @c_geolocation.get_position() do |position|
       @map.set_center([position.x, position.y])
 
-      @c_markers.add({
-        position: position,
-        id: 0,
-        src: 'https://avatars.githubusercontent.com/u/49731748?v=4'
-      })
+      __bef_db.get("SELECT user_id, image_base64 FROM image_avatars;") do |rows|
+        rows.each do |row|
+          @c_markers.add({
+            position: position,
+            user_id: row['user_id'],
+            src: row['image_base64'],
+          })
+        end
+      end
     end
   end
 

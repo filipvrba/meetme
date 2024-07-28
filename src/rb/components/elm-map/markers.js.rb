@@ -14,7 +14,7 @@ export default class CMarkers
     .addTo(@map)
 
     marker.get_element().innerHTML = """
-    <elm-marker-avater id-avatar='#{options.id}' src='#{options.src}'></elm-marker-avater>
+    <elm-marker-avater user-id='#{options.user_id}' src='#{options.src}'></elm-marker-avater>
     """
 
     @markers[options.id] = marker

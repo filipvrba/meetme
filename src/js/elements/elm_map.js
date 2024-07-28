@@ -1,10 +1,11 @@
 import maplibregl from "maplibre-gl";
 import { ENV } from "../env";
+import AProtectionElement from "./abstracts/protection_element";
 import CGeolocation from "../components/elm-map/geolocation";
 import CAnimations from "../components/elm-map/animations";
 import CMarkers from "../components/elm-map/markers";
 
-export default class ElmMap extends HTMLElement {
+export default class ElmMap extends AProtectionElement {
   constructor() {
     super();
 
@@ -40,11 +41,19 @@ export default class ElmMap extends HTMLElement {
     return this._cGeolocation.getPosition((position) => {
       this._map.setCenter([position.x, position.y]);
 
-      return this._cMarkers.add({
-        position,
-        id: 0,
-        src: "https://avatars.githubusercontent.com/u/49731748?v=4"
-      })
+      return _BefDb.get(
+        "SELECT user_id, image_base64 FROM image_avatars;",
+
+        (rows) => {
+          for (let row of rows) {
+            this._cMarkers.add({
+              position,
+              userId: row.user_id,
+              src: row.image_base64
+            })
+          }
+        }
+      )
     })
   };
 

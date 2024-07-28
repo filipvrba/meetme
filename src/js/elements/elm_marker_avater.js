@@ -1,7 +1,7 @@
 export default class ElmMarkerAvater extends HTMLElement {
   constructor() {
     super();
-    this._idAvatar = this.getAttribute("id-avatar");
+    this._userId = this.getAttribute("user-id");
     this._src = this.getAttribute("src");
     this.initElm();
     window.markerAvatarClick = this.markerAvatarClick.bind(this)
@@ -20,7 +20,7 @@ export default class ElmMarkerAvater extends HTMLElement {
   };
 
   initElm() {
-    let template = `${`\n    <img id='avatar-${this._idAvatar}' class='rounded-circle' onclick='markerAvatarClick(${this._idAvatar})' alt='Marker avatar' width='64' height='64' src='${this._src}'></img>\n    `}`;
+    let template = `${`\n    <img id='avatar-${this._userId}' class='rounded-circle' onclick='markerAvatarClick(${this._userId})' alt='Marker avatar' width='64' height='64' src='${this._src}'></img>\n    `}`;
     return this.innerHTML = template
   }
 }
