@@ -111,6 +111,7 @@ export default class ElmDashboardAccountSettings < HTMLElement
     </div>
   </div>
 </div>
+<canvas id='canvas' style='display: none;'></canvas>
     """
 
     self.innerHTML = template

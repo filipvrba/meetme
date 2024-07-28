@@ -114,6 +114,7 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
     </div>
   </div>
 </div>
+<canvas id='canvas' style='display: none;'></canvas>
     `}`;
     return this.innerHTML = template
   };
