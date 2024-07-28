@@ -41,5 +41,8 @@ def bef_send(method, query, is_verbose = true, &callback)
       callback(true) if callback
     end
   end)
+  .catch(lambda do |err|
+    Events.emit('#app', 'befError', err)
+  end)
 end
 Net.prototype.constructor.bef_send = bef_send
