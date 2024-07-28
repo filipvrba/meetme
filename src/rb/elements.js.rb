@@ -28,3 +28,6 @@ window.custom_elements.define('elm-dashboard-jumbotron-avatar', ElmDashboardJumb
 
 import 'ElmDashboardAccountSettings', './elements/dashboard/elm_account_settings'
 window.custom_elements.define('elm-dashboard-account-settings', ElmDashboardAccountSettings)
+
+import 'ElmDashboardGreeting', './elements/dashboard/elm_greeting'
+window.custom_elements.define('elm-dashboard-greeting', ElmDashboardGreeting)

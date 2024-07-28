@@ -32,4 +32,11 @@ import ElmDashboardAccountSettings from "./elements/dashboard/elm_account_settin
 window.customElements.define(
   "elm-dashboard-account-settings",
   ElmDashboardAccountSettings
+);
+
+import ElmDashboardGreeting from "./elements/dashboard/elm_greeting";
+
+window.customElements.define(
+  "elm-dashboard-greeting",
+  ElmDashboardGreeting
 )

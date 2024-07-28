@@ -27,7 +27,7 @@ export default class CBody
       """
     else
       return """
-      <elm-dashboard-jumbotron-avatar user-id='#{@user_id}'></elm-dashboard-jumbotron-avatar>
+      <elm-dashboard-greeting user-id='#{@user_id}'></elm-dashboard-greeting>
       """
     end
   end

@@ -26,7 +26,7 @@ export default class CBody {
       `}`;
 
     default:
-      return `${`\n      <elm-dashboard-jumbotron-avatar user-id='${this._userId}'></elm-dashboard-jumbotron-avatar>\n      `}`
+      return `${`\n      <elm-dashboard-greeting user-id='${this._userId}'></elm-dashboard-greeting>\n      `}`
     }
   }
 }

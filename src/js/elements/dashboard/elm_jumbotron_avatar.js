@@ -1,16 +1,7 @@
 export default class ElmDashboardJumbotronAvatar extends HTMLElement {
   constructor() {
     super();
-    this._userId = this.getAttribute("user-id");
-
-    _BefDb.get(
-      `SELECT id FROM image_avatars WHERE user_id = ${this._userId}`,
-
-      (rows) => {
-        if (rows.length <= 0) return this.initElm()
-      }
-    );
-
+    this.initElm();
     window.dashJumbAvatarBtnClick = this.dashJumbAvatarBtnClick.bind(this)
   };
 

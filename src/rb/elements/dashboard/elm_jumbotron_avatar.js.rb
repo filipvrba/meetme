@@ -2,13 +2,7 @@ export default class ElmDashboardJumbotronAvatar < HTMLElement
   def initialize
     super
 
-    @user_id = self.get_attribute('user-id')
-
-    __bef_db.get("SELECT id FROM image_avatars WHERE user_id = #{@user_id}") do |rows|
-      unless rows.length > 0
-        init_elm()
-      end
-    end
+    init_elm()
 
     window.dash_jumb_avatar_btn_click = dash_jumb_avatar_btn_click
   end
