@@ -14,9 +14,11 @@ export default class ElmDashboard < AProtectionElement
   end
 
   def connected_callback()
+    super
   end
 
   def disconnected_callback()
+    super
   end
 
   def init_elm()

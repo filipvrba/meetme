@@ -34,11 +34,18 @@ export default class ElmMap < AProtectionElement
     @c_markers  = CMarkers.new(self)
   end
 
+  # def dispose()
+  #   @c_markers.remove(@user_id)
+  #   @c_geolocation.stop_watch()
+  # end
+
   def connected_callback()
+    super
     @c_animations.connected_callback()
   end
 
   def disconnected_callback()
+    super
     @c_animations.disconnected_callback()
   end
 

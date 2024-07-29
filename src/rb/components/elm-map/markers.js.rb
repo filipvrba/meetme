@@ -35,6 +35,12 @@ export default class CMarkers
           else
             server_change_positions(s_user_id, m_pos)
           end
+        else
+
+          if @markers.has_own_property(row['user_id'].to_i)
+            remove(row['user_id'].to_i)
+          end
+
         end
       end
     end

@@ -13,11 +13,11 @@ export default class ElmDashboard extends AProtectionElement {
   };
 
   connectedCallback() {
-    return null
+    return super.connectedCallback()
   };
 
   disconnectedCallback() {
-    return null
+    return super.disconnectedCallback()
   };
 
   initElm() {

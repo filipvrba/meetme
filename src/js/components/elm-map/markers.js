@@ -38,6 +38,8 @@ export default class CMarkers {
               src: row.image_base64
             })
           }
+        } else if (this._markers.hasOwnProperty(parseInt(row.user_id))) {
+          this.remove(parseInt(row.user_id))
         }
       }
     })

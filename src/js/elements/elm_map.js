@@ -45,11 +45,17 @@ export default class ElmMap extends AProtectionElement {
     return this._cMarkers
   };
 
+  // def dispose()
+  //   @c_markers.remove(@user_id)
+  //   @c_geolocation.stop_watch()
+  // end
   connectedCallback() {
+    super.connectedCallback();
     return this._cAnimations.connectedCallback()
   };
 
   disconnectedCallback() {
+    super.disconnectedCallback();
     return this._cAnimations.disconnectedCallback()
   };
 
