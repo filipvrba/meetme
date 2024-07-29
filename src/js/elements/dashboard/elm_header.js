@@ -24,7 +24,8 @@ export default class ElmDashboardHeader extends HTMLElement {
   };
 
   dropdownItemSignoutClick() {
-    return Cookie.erase("l-token")
+    Cookie.erase("l-token");
+    return Events.emit("#app", "signout")
   };
 
   initElm() {

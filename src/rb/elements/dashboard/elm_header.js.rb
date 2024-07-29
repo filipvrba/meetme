@@ -21,6 +21,7 @@ export default class ElmDashboardHeader < HTMLElement
   
   def dropdown_item_signout_click()
     Cookie.erase('l-token')
+    Events.emit('#app', 'signout')
   end
 
   def init_elm()

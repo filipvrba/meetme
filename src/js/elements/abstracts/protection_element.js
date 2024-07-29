@@ -1,9 +1,10 @@
 export default class AProtectionElement extends HTMLElement {
   constructor() {
     super();
+    this._hVisibilityChange = _ => this.visibilityChange(null);
 
-    this._hVisibilityChange = (_) => {
-      return this.visibilityChange()
+    this._hSignout = () => {
+      return this.signout()
     };
 
     this._userId = null;
@@ -21,7 +22,7 @@ export default class AProtectionElement extends HTMLElement {
           this.setSpinnerDisplay(false);
           this._userId = parseInt(rows[0].user_id);
 
-          return this.visibilityChange(() => {
+          return this.visibilityChange(null, () => {
             return this.initializeProtected()
           })
         } else {
@@ -34,7 +35,7 @@ export default class AProtectionElement extends HTMLElement {
   };
 
   goToSignin() {
-    return this.visibilityChange(() => location.hash = "signin")
+    return this.visibilityChange(0, () => location.hash = "signin")
   };
 
   setSpinnerDisplay(isDisabled) {
@@ -44,26 +45,41 @@ export default class AProtectionElement extends HTMLElement {
   };
 
   connectedCallback() {
-    return document.addEventListener(
+    document.addEventListener(
       "visibilitychange",
       this._hVisibilityChange
-    )
+    );
+
+    return Events.connect("#app", "signout", this._hSignout)
   };
 
   disconnectedCallback() {
-    return document.removeEventListener(
+    document.removeEventListener(
       "visibilitychange",
       this._hVisibilityChange
-    )
+    );
+
+    return Events.disconnect("#app", "signout", this._hSignout)
   };
 
-  visibilityChange(callback) {
-    let isLogged = document.hidden ? 0 : 1;
+  visibilityChange(loggedId, callback) {
+    let isLogged = undefined;
+
+    if (loggedId === null) {
+      isLogged = document.hidden ? 0 : 1
+    } else {
+      isLogged = loggedId
+    };
+
     let query = `UPDATE user_details SET is_logged = ${isLogged} WHERE user_id = ${this._userId};`;
 
     return _BefDb.set(query, (isUpdated) => {
       if (isUpdated) return callback.call()
     })
+  };
+
+  signout() {
+    return this.visibilityChange(0)
   };
 
   initializeProtected() {
