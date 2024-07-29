@@ -7,7 +7,13 @@ export default class CGeolocation
   def get_position(&callback)
     if navigator.geolocation
       @callback_position = callback
-      navigator.geolocation.get_current_position(@h_success, error)
+
+      options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      }
+      navigator.geolocation.watch_position(@h_success, error, options)
     else
       alert("Geolocation is not supported by this browser.")
     end

@@ -3,7 +3,7 @@ export default class ElmMarkerAvater < HTMLElement
     super
     
     @user_id = self.get_attribute('user-id')
-    @src       = self.get_attribute('src')
+    @src     = self.get_attribute('src')
 
     init_elm()
 

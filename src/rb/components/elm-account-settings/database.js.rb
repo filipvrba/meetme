@@ -74,8 +74,9 @@ WHERE
   end  # update_user
 
   def add_or_update_user_details(bio, image_id, &callback)
-    query_user_details = "INSERT INTO user_details (user_id, bio, " +
-                         "avatar_id) VALUES (#{@element.user_id}, '#{bio}', #{image_id});"
+    query_user_details = "INSERT INTO user_details (user_id, bio, avatar_id, is_logged, position) " +
+                         "VALUES (#{@element.user_id}, '#{bio}', #{image_id}, " +
+                         "1, '');"
       __bef_db.set(query_user_details) do |is_write|
         unless is_write
           query_user_details_update =

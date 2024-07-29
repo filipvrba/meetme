@@ -80,7 +80,7 @@ WHERE
   };
 
   addOrUpdateUserDetails(bio, imageId, callback) {
-    let queryUserDetails = `INSERT INTO user_details (user_id, bio, avatar_id) VALUES (${this._element.userId}, '${bio}', ${imageId});`;
+    let queryUserDetails = `INSERT INTO user_details (user_id, bio, avatar_id, is_logged, position) VALUES (${this._element.userId}, '${bio}', ${imageId}, 1, '');`;
 
     return _BefDb.set(queryUserDetails, (isWrite) => {
       let queryUserDetailsUpdate;

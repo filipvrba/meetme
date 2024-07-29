@@ -5,12 +5,16 @@ export default class CGeolocation {
   };
 
   getPosition(callback) {
+    let options;
+
     if (navigator.geolocation) {
       this._callbackPosition = callback;
+      options = {enableHighAccuracy: true, timeout: 5_000, maximumAge: 0};
 
-      return navigator.geolocation.getCurrentPosition(
+      return navigator.geolocation.watchPosition(
         this._hSuccess,
-        this.error.bind(this)
+        this.error.bind(this),
+        options
       )
     } else {
       return alert("Geolocation is not supported by this browser.")

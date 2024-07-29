@@ -5,8 +5,11 @@ import 'AProtectionElement', './abstracts/protection_element'
 import 'CGeolocation', '../components/elm-map/geolocation'
 import 'CAnimations', '../components/elm-map/animations'
 import 'CMarkers', '../components/elm-map/markers'
+import 'CDatabase', '../components/elm-map/database'
 
 export default class ElmMap < AProtectionElement
+  attr_reader :c_database, :user_id, :map
+
   def initialize
     super
 
@@ -18,9 +21,7 @@ export default class ElmMap < AProtectionElement
     init_elm()
   end
 
-  def connected_callback()
-    @c_animations.connected_callback()
-    
+  def initialize_protected()
     @map = maplibregl.Map.new({
       container: 'map',
       style: "https://api.maptiler.com/maps/streets-v2/style.json?key=#{ENV::VITE_API_KEY_MAPTILER}",
@@ -29,7 +30,12 @@ export default class ElmMap < AProtectionElement
     })
     @map.on('load', @h_load_map)
 
-    @c_markers = CMarkers.new(@map)
+    @c_database = CDatabase.new(@user_id)
+    @c_markers  = CMarkers.new(self)
+  end
+
+  def connected_callback()
+    @c_animations.connected_callback()
   end
 
   def disconnected_callback()
@@ -40,15 +46,7 @@ export default class ElmMap < AProtectionElement
     @c_geolocation.get_position() do |position|
       @map.set_center([position.x, position.y])
 
-      __bef_db.get("SELECT user_id, image_base64 FROM image_avatars;") do |rows|
-        rows.each do |row|
-          @c_markers.add({
-            position: position,
-            user_id: row['user_id'],
-            src: row['image_base64'],
-          })
-        end
-      end
+      @c_markers.server_add_from_db(position)
     end
   end
 
