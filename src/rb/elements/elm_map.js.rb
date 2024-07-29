@@ -56,7 +56,6 @@ export default class ElmMap < AProtectionElement
         @c_markers.server_add_from_db(position)
       end
 
-      puts "loool"
       @timeout_id = set_timeout(l_update_markers, 10_000)
     end
 
@@ -65,6 +64,7 @@ export default class ElmMap < AProtectionElement
 
   def init_elm()
     template = """
+<elm-map-user-details></elm-map-user-details>
 <div id='map'></div>
     """
 

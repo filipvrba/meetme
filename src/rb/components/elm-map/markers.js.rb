@@ -52,7 +52,7 @@ export default class CMarkers
     .addTo(@element.map)
 
     marker.get_element().innerHTML = """
-    <elm-marker-avater user-id='#{options.user_id}' src='#{options.src}'></elm-marker-avater>
+    <elm-marker-avater user-id='#{options.user_id}' src='#{options.src}' data-bs-toggle='modal' data-bs-target='#userDetailModal'></elm-marker-avater>
     """
 
     @markers[options.user_id] = marker

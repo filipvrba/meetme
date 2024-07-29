@@ -5,6 +5,7 @@ import '../css/elm-map.css'
 import '../css/elm-spinner.css'
 import '../css/elm-dashboard-header.css'
 import '../css/elm-account-settings.css'
+import '../css/elm-map-user-details.css'
 import '../css/style.css'
 
 import './core'

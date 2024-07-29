@@ -16,7 +16,7 @@ export default class ElmMarkerAvater extends HTMLElement {
   };
 
   markerAvatarClick(idAvatar) {
-    return console.log(idAvatar)
+    return Events.emit("#app", "avatarClick", idAvatar)
   };
 
   initElm() {

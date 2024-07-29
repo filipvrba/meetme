@@ -31,3 +31,6 @@ window.custom_elements.define('elm-dashboard-account-settings', ElmDashboardAcco
 
 import 'ElmDashboardGreeting', './elements/dashboard/elm_greeting'
 window.custom_elements.define('elm-dashboard-greeting', ElmDashboardGreeting)
+
+import 'ElmMapUserDetails', './elements/map/elm_user_details'
+window.custom_elements.define('elm-map-user-details', ElmMapUserDetails)

@@ -17,7 +17,7 @@ export default class ElmMarkerAvater < HTMLElement
   end
 
   def marker_avatar_click(id_avatar)
-    puts id_avatar
+    Events.emit('#app', 'avatarClick', id_avatar)
   end
 
   def init_elm()

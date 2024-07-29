@@ -39,4 +39,11 @@ import ElmDashboardGreeting from "./elements/dashboard/elm_greeting";
 window.customElements.define(
   "elm-dashboard-greeting",
   ElmDashboardGreeting
+);
+
+import ElmMapUserDetails from "./elements/map/elm_user_details";
+
+window.customElements.define(
+  "elm-map-user-details",
+  ElmMapUserDetails
 )

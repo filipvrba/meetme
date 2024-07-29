@@ -64,7 +64,6 @@ export default class ElmMap extends AProtectionElement {
         return this._cMarkers.serverAddFromDb(position)
       });
 
-      console.log("loool");
       this._timeoutId = setTimeout(lUpdateMarkers, 10_000);
       return this._timeoutId
     };
@@ -73,7 +72,7 @@ export default class ElmMap extends AProtectionElement {
   };
 
   initElm() {
-    let template = `${`\n<div id='map'></div>\n    `}`;
+    let template = `${`\n<elm-map-user-details></elm-map-user-details>\n<div id='map'></div>\n    `}`;
     return this.innerHTML = template
   }
 }
