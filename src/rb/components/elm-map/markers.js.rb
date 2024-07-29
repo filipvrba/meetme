@@ -47,8 +47,12 @@ export default class CMarkers
     @markers[options.user_id] = marker
   end
 
-  def remove(id_marker)
-    @markers[id_marker].remove()
-    delete @markers[id_marker]
+  def all_remove()
+    @markers.keys().each do |k|
+      @markers[k].remove()
+      if @markers.has_own_property(k)
+        delete @markers[k]
+      end
+    end
   end
 end

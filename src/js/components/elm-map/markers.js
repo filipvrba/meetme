@@ -49,8 +49,10 @@ export default class CMarkers {
     return this._markers[options.userId] = marker
   };
 
-  remove(idMarker) {
-    this._markers[idMarker].remove();
-    delete this._markers[idMarker]
+  allRemove() {
+    for (let k of Object.keys(this._markers)) {
+      this._markers[k].remove();
+      if (this._markers.hasOwnProperty(k)) delete this._markers[k]
+    }
   }
 }

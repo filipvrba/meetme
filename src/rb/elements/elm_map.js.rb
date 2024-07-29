@@ -46,6 +46,7 @@ export default class ElmMap < AProtectionElement
     @c_geolocation.get_position() do |position|
       @map.set_center([position.x, position.y])
 
+      @c_markers.all_remove()
       @c_markers.server_add_from_db(position)
     end
   end
