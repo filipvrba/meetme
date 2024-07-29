@@ -28,6 +28,7 @@ export default class ElmMap extends AProtectionElement {
 
     this._cGeolocation = new CGeolocation;
     this._cAnimations = new CAnimations;
+    this._timeoutId = null;
     this.initElm()
   };
 
@@ -52,7 +53,8 @@ export default class ElmMap extends AProtectionElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    return this._cAnimations.disconnectedCallback()
+    this._cAnimations.disconnectedCallback();
+    return clearTimeout(this._timeoutId)
   };
 
   loadedMap() {
@@ -62,7 +64,9 @@ export default class ElmMap extends AProtectionElement {
         return this._cMarkers.serverAddFromDb(position)
       });
 
-      return setTimeout(lUpdateMarkers, 10_000)
+      console.log("loool");
+      this._timeoutId = setTimeout(lUpdateMarkers, 10_000);
+      return this._timeoutId
     };
 
     return lUpdateMarkers.call()

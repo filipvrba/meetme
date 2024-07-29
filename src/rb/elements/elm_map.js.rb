@@ -17,6 +17,8 @@ export default class ElmMap < AProtectionElement
 
     @c_geolocation = CGeolocation.new
     @c_animations = CAnimations.new
+
+    @timeout_id = nil
     
     init_elm()
   end
@@ -42,6 +44,8 @@ export default class ElmMap < AProtectionElement
   def disconnected_callback()
     super
     @c_animations.disconnected_callback()
+
+    clear_timeout(@timeout_id)
   end
 
   def loaded_map()
@@ -52,7 +56,8 @@ export default class ElmMap < AProtectionElement
         @c_markers.server_add_from_db(position)
       end
 
-      set_timeout(l_update_markers, 10_000)
+      puts "loool"
+      @timeout_id = set_timeout(l_update_markers, 10_000)
     end
 
     l_update_markers.call()
