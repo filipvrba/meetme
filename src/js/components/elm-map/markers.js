@@ -27,10 +27,14 @@ export default class CMarkers {
             mPos = new Vector(mPos[0], mPos[1])
           };
 
-          if (mPos) {
+          let sUserId = parseInt(row.user_id);
+
+          if (this._markers.hasOwnProperty(sUserId)) {
+            this.serverChangePositions(sUserId, mPos)
+          } else if (mPos) {
             this.serverAdd({
               position: mPos,
-              userId: row.user_id,
+              userId: sUserId,
               src: row.image_base64
             })
           }
@@ -49,10 +53,12 @@ export default class CMarkers {
     return this._markers[options.userId] = marker
   };
 
-  allRemove() {
-    for (let k of Object.keys(this._markers)) {
-      this._markers[k].remove();
-      if (this._markers.hasOwnProperty(k)) delete this._markers[k]
-    }
+  serverChangePositions(idMarker, position) {
+    return this._markers[idMarker].setLngLat([position.x, position.y])
+  };
+
+  remove(idMarker) {
+    this._markers[idMarker].remove();
+    delete this._markers[idMarker]
   }
 }

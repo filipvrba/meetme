@@ -25,11 +25,16 @@ export default class CMarkers
             @element.c_database.update_position(m_pos)
           end
 
-          server_add({
-            position: m_pos,
-            user_id:  row['user_id'],
-            src:      row['image_base64'],
-          }) if m_pos
+          s_user_id = row['user_id'].to_i
+          unless @markers.has_own_property(s_user_id)
+            server_add({
+              position: m_pos,
+              user_id:  s_user_id,
+              src:      row['image_base64'],
+            }) if m_pos
+          else
+            server_change_positions(s_user_id, m_pos)
+          end
         end
       end
     end
@@ -47,12 +52,13 @@ export default class CMarkers
     @markers[options.user_id] = marker
   end
 
-  def all_remove()
-    @markers.keys().each do |k|
-      @markers[k].remove()
-      if @markers.has_own_property(k)
-        delete @markers[k]
-      end
-    end
+  def server_change_positions(id_marker, position)
+    @markers[id_marker]
+    .setLngLat([position.x, position.y])
+  end
+
+  def remove(id_marker)
+    @markers[id_marker].remove()
+    delete @markers[id_marker]
   end
 end
