@@ -31,6 +31,10 @@ export default class ElmMapUserDetails < HTMLElement
   end
 
   def update_element(user_id)
+    @img.src             = 'https://via.placeholder.com/150'
+    @full_name.innerHTML = ''
+    @bio.innerHTML       = ''
+
     @c_database.get_details(user_id) do |row|
       @img.src             = row['image_base64']
       @full_name.innerHTML = row['full_name'].decode_base64()
@@ -51,8 +55,8 @@ export default class ElmMapUserDetails < HTMLElement
         <div class='card' style='border: none;'>
           <img id='userDetailImg' src='https://via.placeholder.com/150' class='mx-auto rounded-circle' width='256' height='256' alt='Profilová fotka'>
           <div class='card-body'>
-              <h5 id='userDetailName' class='card-title'>Jan Novák</h5>
-              <p id='userDetailBio' class='card-text'>Ahoj, jsem Jan Novák a jsem webový vývojář z Prahy. Mám rád kódování a práci na zajímavých projektech.</p>
+              <h5 id='userDetailName' class='card-title'></h5>
+              <p id='userDetailBio' class='card-text'></p>
           </div>
         </div>
       </div>
