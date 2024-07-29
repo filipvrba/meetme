@@ -8,7 +8,11 @@ export default class CGeolocation
     if navigator.geolocation
       @callback_position = callback
 
-      navigator.geolocation.get_current_position(@h_success, error)
+      options = {
+        enable_high_accuracy: true,
+        maximum_age: 0,
+      }
+      navigator.geolocation.get_current_position(@h_success, error, options)
     else
       alert("Geolocation is not supported by this browser.")
     end
