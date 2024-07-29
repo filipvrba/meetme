@@ -45,10 +45,6 @@ export default class ElmMap extends AProtectionElement {
     return this._cMarkers
   };
 
-  // def dispose()
-  //   @c_markers.remove(@user_id)
-  //   @c_geolocation.stop_watch()
-  // end
   connectedCallback() {
     super.connectedCallback();
     return this._cAnimations.connectedCallback()
@@ -60,10 +56,16 @@ export default class ElmMap extends AProtectionElement {
   };
 
   loadedMap() {
-    return this._cGeolocation.getPosition((position) => {
-      this._map.setCenter([position.x, position.y]);
-      return this._cMarkers.serverAddFromDb(position)
-    })
+    let lUpdateMarkers = () => {
+      this._cGeolocation.getPosition((position) => {
+        this._map.setCenter([position.x, position.y]);
+        return this._cMarkers.serverAddFromDb(position)
+      });
+
+      return setTimeout(lUpdateMarkers, 10_000)
+    };
+
+    return lUpdateMarkers.call()
   };
 
   initElm() {

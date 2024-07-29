@@ -22,8 +22,9 @@ export default class AProtectionElement < HTMLElement
         else
           set_spinner_display(false)
           @user_id = rows[0]['user_id'].to_i
-          visibility_change()
-          initialize_protected()
+          visibility_change() do
+            initialize_protected()
+          end
         end
       end
     end

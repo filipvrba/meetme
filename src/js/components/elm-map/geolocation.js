@@ -1,24 +1,17 @@
 export default class CGeolocation {
   constructor() {
     this._hSuccess = p => this.success(p);
-    this._callbackPosition = null;
-    this._geoId = null
+    this._callbackPosition = null
   };
 
   getPosition(callback) {
-    let options;
-
     if (navigator.geolocation) {
       this._callbackPosition = callback;
-      options = {enableHighAccuracy: true, timeout: 5_000, maximumAge: 0};
 
-      this._geoId = navigator.geolocation.watchPosition(
+      return navigator.geolocation.getCurrentPosition(
         this._hSuccess,
-        this.error.bind(this),
-        options
-      );
-
-      return this._geoId
+        this.error.bind(this)
+      )
     } else {
       return alert("Geolocation is not supported by this browser.")
     }
@@ -33,9 +26,5 @@ export default class CGeolocation {
 
   error(message) {
     return alert(`Unable to retrieve your location (${message.code}).`)
-  };
-
-  stopWatch() {
-    return navigator.geolocation.clearWatch(this._geoId)
   }
 }

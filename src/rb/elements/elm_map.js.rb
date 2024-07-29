@@ -33,12 +33,7 @@ export default class ElmMap < AProtectionElement
     @c_database = CDatabase.new(@user_id)
     @c_markers  = CMarkers.new(self)
   end
-
-  # def dispose()
-  #   @c_markers.remove(@user_id)
-  #   @c_geolocation.stop_watch()
-  # end
-
+  
   def connected_callback()
     super
     @c_animations.connected_callback()
@@ -50,11 +45,17 @@ export default class ElmMap < AProtectionElement
   end
 
   def loaded_map()
-    @c_geolocation.get_position() do |position|
-      @map.set_center([position.x, position.y])
+    l_update_markers = lambda do
+      @c_geolocation.get_position() do |position|
+        @map.set_center([position.x, position.y])
 
-      @c_markers.server_add_from_db(position)
+        @c_markers.server_add_from_db(position)
+      end
+
+      set_timeout(l_update_markers, 10_000)
     end
+
+    l_update_markers.call()
   end
 
   def init_elm()

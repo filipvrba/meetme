@@ -20,8 +20,10 @@ export default class AProtectionElement extends HTMLElement {
         if (isAccessible) {
           this.setSpinnerDisplay(false);
           this._userId = parseInt(rows[0].user_id);
-          this.visibilityChange();
-          return this.initializeProtected()
+
+          return this.visibilityChange(() => {
+            return this.initializeProtected()
+          })
         } else {
           return this.goToSignin()
         }
