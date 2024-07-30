@@ -1,0 +1,20 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
+.icons-padding {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.footer-padding {
+    padding-bottom: 56.8px;
+}
+
+.icon-large {
+    font-size: 1.7rem;
+}

@@ -41,6 +41,13 @@ window.customElements.define(
   ElmDashboardGreeting
 );
 
+import ElmDashboardFooter from "./elements/dashboard/elm_footer";
+
+window.customElements.define(
+  "elm-dashboard-footer",
+  ElmDashboardFooter
+);
+
 import ElmMapUserDetails from "./elements/map/elm_user_details";
 
 window.customElements.define(

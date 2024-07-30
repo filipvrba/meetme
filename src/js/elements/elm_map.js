@@ -72,7 +72,11 @@ export default class ElmMap extends AProtectionElement {
   };
 
   initElm() {
-    let template = `${`\n<elm-map-user-details></elm-map-user-details>\n<div id='map'></div>\n    `}`;
+    let template = `${`
+<elm-map-user-details></elm-map-user-details>
+<div id='map'></div>
+<elm-dashboard-footer></elm-dashboard-footer>
+    `}`;
     return this.innerHTML = template
   }
 }

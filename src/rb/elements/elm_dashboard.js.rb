@@ -24,7 +24,8 @@ export default class ElmDashboard < AProtectionElement
   def init_elm()
     template = """
     <elm-dashboard-header user-id='#{@user_id}'></elm-dashboard-header>
-    <div id='dashboardBody' class='nav-padding'></div>
+    <div id='dashboardBody' class='nav-padding footer-padding'></div>
+    <elm-dashboard-footer></elm-dashboard-footer>
     """
 
     self.innerHTML = template

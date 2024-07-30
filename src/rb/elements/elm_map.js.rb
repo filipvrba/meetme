@@ -66,6 +66,7 @@ export default class ElmMap < AProtectionElement
     template = """
 <elm-map-user-details></elm-map-user-details>
 <div id='map'></div>
+<elm-dashboard-footer></elm-dashboard-footer>
     """
 
     self.innerHTML = template

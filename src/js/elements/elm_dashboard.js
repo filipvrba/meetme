@@ -21,7 +21,11 @@ export default class ElmDashboard extends AProtectionElement {
   };
 
   initElm() {
-    let template = `${`\n    <elm-dashboard-header user-id='${this._userId}'></elm-dashboard-header>\n    <div id='dashboardBody' class='nav-padding'></div>\n    `}`;
+    let template = `${`
+    <elm-dashboard-header user-id='${this._userId}'></elm-dashboard-header>
+    <div id='dashboardBody' class='nav-padding footer-padding'></div>
+    <elm-dashboard-footer></elm-dashboard-footer>
+    `}`;
     return this.innerHTML = template
   }
 }
