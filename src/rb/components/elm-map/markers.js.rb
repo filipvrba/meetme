@@ -1,4 +1,5 @@
 import 'maplibregl', 'maplibre-gl'
+import 'CAnimations', './animations'
 
 export default class CMarkers
   attr_reader :markers
@@ -59,8 +60,13 @@ export default class CMarkers
   end
 
   def server_change_positions(id_marker, position)
-    @markers[id_marker]
-    .setLngLat([position.x, position.y])
+    m_old_position = @markers[id_marker].get_lng_lat()
+    m_old_position = Vector.new(m_old_position.lng, m_old_position.lat)
+
+    @element.c_animations.move_position(position, m_old_position) do |update_position|
+      @markers[id_marker]
+      .setLngLat([update_position.x, update_position.y])
+    end
   end
 
   def remove(id_marker)

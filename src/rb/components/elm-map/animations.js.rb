@@ -2,11 +2,12 @@ export default class CAnimations
   def initialize
     @h_tick = lambda { |e| update(e.detail.value) }
 
+    @animations = {}
     @obj_moving_position = {
       is_active:    false,
       position:     nil,
       old_position: nil,
-      speed:        0.1,
+      speed:        1,
       t:            0,
       callback:     nil,
     }
@@ -25,45 +26,65 @@ export default class CAnimations
   end
 
   def moving_position(dt)
-    unless @obj_moving_position.is_active
+    unless @animations.length > 0 
       return
     end
 
-    l_lerp_position = lambda do
-      return @obj_moving_position.old_position.lerp(
-        @obj_moving_position.position, @obj_moving_position.t)
-    end
-    l_callback = lambda do
-      @obj_moving_position.callback(l_lerp_position()) if
-      @obj_moving_position.callback
-    end
+    @animations.keys().each do |k|
+      obj_moving_position = @animations[k]
 
-    @obj_moving_position.t += @obj_moving_position.speed * dt
+      unless obj_moving_position.is_active
+        return
+      end
 
-    puts @obj_moving_position.t
-    
-    if @obj_moving_position.t >= 1
-      @obj_moving_position.t         = 1
-      @obj_moving_position.is_active = false
+      l_lerp_position = lambda do
+        return obj_moving_position.old_position.lerp(
+          obj_moving_position.position, obj_moving_position.t)
+      end
+      l_callback = lambda do
+        obj_moving_position.callback(l_lerp_position()) if
+        obj_moving_position.callback
+      end
 
-      l_callback()
+      obj_moving_position.t += obj_moving_position.speed * dt
+      
+      if obj_moving_position.t >= 1
+        obj_moving_position.t         = 1
+        obj_moving_position.is_active = false
 
-      @obj_moving_position.position     = nil
-      @obj_moving_position.old_position = nil
+        l_callback()
 
-      @obj_moving_position.callback = nil
-    else
-      l_callback()
+        obj_moving_position.position     = nil
+        obj_moving_position.old_position = nil
+
+        obj_moving_position.callback = nil
+
+        delete @animations[k]
+      else
+        l_callback()
+      end
     end
   end
 
   def move_position(position, old_position, &callback)
-    @obj_moving_position.is_active = true
-    @obj_moving_position.t         = 0
-    
-    @obj_moving_position.position     = position
-    @obj_moving_position.old_position = old_position
+    options = {
+      is_active:    true,
+      position:     position,
+      old_position: old_position,
+      speed:        1,
+      t:            0,
+      callback:     callback,
+    }
+    @animations[generate_random_string()] = options
+  end
 
-    @obj_moving_position.callback = callback
+  def generate_random_string(length = 10)
+    characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    result = ''
+    characters_length = characters.length
+    (0 .. length).each do |i|
+        result += characters.char_at(Math.floor(Math.random() * characters_length))
+    end
+    return result
   end
 end

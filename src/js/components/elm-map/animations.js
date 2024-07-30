@@ -1,12 +1,13 @@
 export default class CAnimations {
   constructor() {
     this._hTick = e => this.update(e.detail.value);
+    this._animations = {};
 
     this._objMovingPosition = {
       isActive: false,
       position: null,
       oldPosition: null,
-      speed: 0.1,
+      speed: 1,
       t: 0,
       callback: null
     }
@@ -25,41 +26,63 @@ export default class CAnimations {
   };
 
   movingPosition(dt) {
-    if (!this._objMovingPosition.isActive) return;
+    if (this._animations.length <= 0) return;
 
-    let lLerpPosition = () => (
-      this._objMovingPosition.oldPosition.lerp(
-        this._objMovingPosition.position,
-        this._objMovingPosition.t
-      )
-    );
+    for (let k of Object.keys(this._animations)) {
+      let objMovingPosition = this._animations[k];
+      if (!objMovingPosition.isActive) return;
 
-    let lCallback = () => {
-      if (this._objMovingPosition.callback) {
-        return this._objMovingPosition.callback(lLerpPosition())
+      let lLerpPosition = () => (
+        objMovingPosition.oldPosition.lerp(
+          objMovingPosition.position,
+          objMovingPosition.t
+        )
+      );
+
+      let lCallback = () => {
+        if (objMovingPosition.callback) {
+          return objMovingPosition.callback(lLerpPosition())
+        }
+      };
+
+      objMovingPosition.t += objMovingPosition.speed * dt;
+
+      if (objMovingPosition.t >= 1) {
+        objMovingPosition.t = 1;
+        objMovingPosition.isActive = false;
+        lCallback();
+        objMovingPosition.position = null;
+        objMovingPosition.oldPosition = null;
+        objMovingPosition.callback = null;
+        delete this._animations[k]
+      } else {
+        lCallback()
       }
-    };
-
-    this._objMovingPosition.t += this._objMovingPosition.speed * dt;
-    console.log(this._objMovingPosition.t);
-
-    if (this._objMovingPosition.t >= 1) {
-      this._objMovingPosition.t = 1;
-      this._objMovingPosition.isActive = false;
-      lCallback();
-      this._objMovingPosition.position = null;
-      this._objMovingPosition.oldPosition = null;
-      return this._objMovingPosition.callback = null
-    } else {
-      return lCallback()
     }
   };
 
   movePosition(position, oldPosition, callback) {
-    this._objMovingPosition.isActive = true;
-    this._objMovingPosition.t = 0;
-    this._objMovingPosition.position = position;
-    this._objMovingPosition.oldPosition = oldPosition;
-    return this._objMovingPosition.callback = callback
+    let options = {
+      isActive: true,
+      position,
+      oldPosition,
+      speed: 1,
+      t: 0,
+      callback
+    };
+
+    return this._animations[this.generateRandomString()] = options
+  };
+
+  generateRandomString(length=10) {
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    let charactersLength = characters.length;
+
+    for (let i = 0; i <= length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    };
+
+    return result
   }
 }

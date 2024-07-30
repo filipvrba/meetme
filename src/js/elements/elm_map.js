@@ -19,6 +19,10 @@ export default class ElmMap extends AProtectionElement {
     return this._map
   };
 
+  get cAnimations() {
+    return this._cAnimations
+  };
+
   constructor() {
     super();
 

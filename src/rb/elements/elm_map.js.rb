@@ -8,7 +8,7 @@ import 'CMarkers', '../components/elm-map/markers'
 import 'CDatabase', '../components/elm-map/database'
 
 export default class ElmMap < AProtectionElement
-  attr_reader :c_database, :user_id, :map
+  attr_reader :c_database, :user_id, :map, :c_animations
 
   def initialize
     super

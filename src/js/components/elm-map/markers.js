@@ -1,4 +1,5 @@
 import maplibregl from "maplibre-gl";
+import CAnimations from "./animations";
 
 export default class CMarkers {
   get markers() {
@@ -56,7 +57,20 @@ export default class CMarkers {
   };
 
   serverChangePositions(idMarker, position) {
-    return this._markers[idMarker].setLngLat([position.x, position.y])
+    let mOldPosition = this._markers[idMarker].getLngLat();
+    mOldPosition = new Vector(mOldPosition.lng, mOldPosition.lat);
+
+    return this._element.cAnimations.movePosition(
+      position,
+      mOldPosition,
+
+      updatePosition => (
+        this._markers[idMarker].setLngLat([
+          updatePosition.x,
+          updatePosition.y
+        ])
+      )
+    )
   };
 
   remove(idMarker) {
