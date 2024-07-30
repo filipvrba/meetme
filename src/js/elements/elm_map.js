@@ -65,7 +65,15 @@ export default class ElmMap extends AProtectionElement {
   loadedMap() {
     let lUpdateMarkers = () => {
       this._cGeolocation.getPosition((position) => {
-        this._map.setCenter([position.x, position.y]);
+        let mOldPosition = this._map.getCenter();
+        mOldPosition = new Vector(mOldPosition.lng, mOldPosition.lat);
+
+        this._cAnimations.movePosition(
+          position,
+          mOldPosition,
+          updatePosition => this._map.setCenter([updatePosition.x, updatePosition.y])
+        );
+
         return this._cMarkers.serverAddFromDb(position)
       });
 

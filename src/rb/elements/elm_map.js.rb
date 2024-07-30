@@ -51,7 +51,13 @@ export default class ElmMap < AProtectionElement
   def loaded_map()
     l_update_markers = lambda do
       @c_geolocation.get_position() do |position|
-        @map.set_center([position.x, position.y])
+
+        m_old_position = @map.get_center()
+        m_old_position = Vector.new(m_old_position.lng, m_old_position.lat)
+
+        @c_animations.move_position(position, m_old_position) do |update_position|
+          @map.set_center([update_position.x, update_position.y])
+        end
 
         @c_markers.server_add_from_db(position)
       end
