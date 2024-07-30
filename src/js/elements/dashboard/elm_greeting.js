@@ -32,10 +32,9 @@ WHERE ia.user_id = ${this._userId};
     <div class='text-center'>
       <div class='card-body'>
         <img src='${avatar}' alt='Profilová fotografie' class='rounded-circle mb-3'>
-        <h5 class='card-title mb-1'>Vítejte, <span id='fullName'>${fullName}</span>!</h5>
+        <h4 class='card-title mb-1'>Vítejte, <span id='fullName'>${fullName}</span>!</h4>
         <p class='card-text mb-2'>
-          Jste nyní připojeni online. To znamená, že máte přístup ke všem dostupným funkcím naší aplikace. 
-          Můžete například používat mapy s GPS, které vám umožní snadno se seznamovat s lidmi ve vašem okolí.
+          Nyní jste připojeni k MeetMe a ostatní uživatelé vás mohou vidět.
         </p>
       </div>
     </div>

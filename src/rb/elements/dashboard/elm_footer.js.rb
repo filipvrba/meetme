@@ -27,12 +27,12 @@ export default class ElmDashboardFooter < HTMLElement
 <footer class='footer navbar-light bg-light'>
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
-      <div class='col-sm'>
+      <div class='col'>
         <a href='#dashboard' class='text-dark'>
           <i class='bi bi-speedometer2 icon-large'></i>
         </a>
       </div>
-      <div class='col-sm'>
+      <div class='col'>
         <a href='#mapa' id='dashboardFooterIconMap' class='text-dark disabled-link'>
           <i class='bi bi-map icon-large'></i>
         </a>
