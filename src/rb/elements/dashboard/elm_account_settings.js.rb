@@ -7,7 +7,7 @@ export default class ElmDashboardAccountSettings < HTMLElement
 
   def initialize
     super
-    @h_bef_error = lambda { error_save_changes() }
+    @h_bef_error = lambda { |err| error_save_changes(); puts err.detail.value.stack }
     @h_bio_input = lambda { bio_auto_resize() }
 
     @user_id     = self.get_attribute('user-id')

@@ -14,8 +14,9 @@ export default class ElmDashboardAccountSettings extends HTMLElement {
   constructor() {
     super();
 
-    this._hBefError = () => {
-      return this.errorSaveChanges()
+    this._hBefError = (err) => {
+      this.errorSaveChanges();
+      return console.log(err.detail.value.stack)
     };
 
     this._hBioInput = () => {

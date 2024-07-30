@@ -74,7 +74,7 @@ export default class AProtectionElement extends HTMLElement {
     let query = `UPDATE user_details SET is_logged = ${isLogged} WHERE user_id = ${this._userId};`;
 
     return _BefDb.set(query, (isUpdated) => {
-      if (isUpdated) return callback.call()
+      if (isUpdated) if (callback) return callback.call()
     })
   };
 

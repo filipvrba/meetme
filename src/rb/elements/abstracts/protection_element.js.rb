@@ -64,7 +64,9 @@ export default class AProtectionElement < HTMLElement
     query = "UPDATE user_details SET is_logged = #{is_logged} " +
             "WHERE user_id = #{@user_id};"
     __bef_db.set(query) do |is_updated|
-      callback.call() if is_updated
+      if is_updated
+        callback.call() if callback
+      end
     end
   end
 
