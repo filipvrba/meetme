@@ -1,7 +1,14 @@
 export default class ElmDashboardFooter extends HTMLElement {
   constructor() {
     super();
-    this.initElm()
+    this._userId = this.getAttribute("user-id");
+    this.initElm();
+    this._iconMap = this.querySelector("#dashboardFooterIconMap");
+    let query = `SELECT id FROM image_avatars WHERE user_id = ${this._userId};`;
+
+    _BefDb.get(query, (rows) => {
+      if (rows.length > 0) return this._iconMap.classList.remove("disabled-link")
+    })
   };
 
   connectedCallback() {
@@ -23,7 +30,7 @@ export default class ElmDashboardFooter extends HTMLElement {
         </a>
       </div>
       <div class='col-sm'>
-        <a href='#mapa' class='text-dark'>
+        <a href='#mapa' id='dashboardFooterIconMap' class='text-dark disabled-link'>
           <i class='bi bi-map icon-large'></i>
         </a>
       </div>

@@ -28,11 +28,12 @@ export default class ElmMap extends AProtectionElement {
 
     this._cGeolocation = new CGeolocation;
     this._cAnimations = new CAnimations;
-    this._timeoutId = null;
-    this.initElm()
+    this._timeoutId = null
   };
 
   initializeProtected() {
+    this.initElm();
+
     this._map = new maplibregl.Map({
       container: "map",
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${ENV.VITE_API_KEY_MAPTILER}`,
@@ -75,7 +76,7 @@ export default class ElmMap extends AProtectionElement {
     let template = `${`
 <elm-map-user-details></elm-map-user-details>
 <div id='map'></div>
-<elm-dashboard-footer></elm-dashboard-footer>
+<elm-dashboard-footer user-id='${this._userId}'></elm-dashboard-footer>
     `}`;
     return this.innerHTML = template
   }

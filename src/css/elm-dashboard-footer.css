@@ -18,3 +18,8 @@
 .icon-large {
     font-size: 1.7rem;
 }
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+}

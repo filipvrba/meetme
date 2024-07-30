@@ -19,11 +19,11 @@ export default class ElmMap < AProtectionElement
     @c_animations = CAnimations.new
 
     @timeout_id = nil
-    
-    init_elm()
   end
 
   def initialize_protected()
+    init_elm()
+
     @map = maplibregl.Map.new({
       container: 'map',
       style: "https://api.maptiler.com/maps/streets-v2/style.json?key=#{ENV::VITE_API_KEY_MAPTILER}",
@@ -66,7 +66,7 @@ export default class ElmMap < AProtectionElement
     template = """
 <elm-map-user-details></elm-map-user-details>
 <div id='map'></div>
-<elm-dashboard-footer></elm-dashboard-footer>
+<elm-dashboard-footer user-id='#{@user_id}'></elm-dashboard-footer>
     """
 
     self.innerHTML = template

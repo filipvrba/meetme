@@ -43,12 +43,6 @@ WHERE ia.user_id = #{@user_id};
           Jste nyní připojeni online. To znamená, že máte přístup ke všem dostupným funkcím naší aplikace. 
           Můžete například používat mapy s GPS, které vám umožní snadno se seznamovat s lidmi ve vašem okolí.
         </p>
-        <p class='mb-3'>
-          <i class='bi bi-geo-alt-fill'></i> 
-          Prozkoumejte své blízké okolí a využijte příležitosti k navazování nových přátelství! 
-          Naše funkce vám pomohou objevovat zajímavá místa a spojovat se s lidmi, kteří mají podobné zájmy.
-        </p>
-        <a class='btn btn-primary w-75' href='#mapa'>Přejít na mapu</a>
       </div>
     </div>
   </div>
