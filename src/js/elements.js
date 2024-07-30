@@ -53,4 +53,7 @@ import ElmMapUserDetails from "./elements/map/elm_user_details";
 window.customElements.define(
   "elm-map-user-details",
   ElmMapUserDetails
-)
+);
+
+import ElmDashboardChat from "./elements/dashboard/elm_chat";
+window.customElements.define("elm-dashboard-chat", ElmDashboardChat)

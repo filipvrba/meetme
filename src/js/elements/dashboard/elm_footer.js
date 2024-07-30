@@ -4,10 +4,14 @@ export default class ElmDashboardFooter extends HTMLElement {
     this._userId = this.getAttribute("user-id");
     this.initElm();
     this._iconMap = this.querySelector("#dashboardFooterIconMap");
+    this._iconChat = this.querySelector("#dashboardFooterIconChat");
     let query = `SELECT id FROM image_avatars WHERE user_id = ${this._userId};`;
 
     _BefDb.get(query, (rows) => {
-      if (rows.length > 0) return this._iconMap.classList.remove("disabled-link")
+      if (rows.length > 0) {
+        this._iconMap.classList.remove("disabled-link");
+        return this._iconChat.classList.remove("disabled-link")
+      }
     })
   };
 
@@ -25,8 +29,13 @@ export default class ElmDashboardFooter extends HTMLElement {
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
       <div class='col'>
-        <a href='#dashboard' class='text-dark'>
+        <a href='#dashboard' class='text-dark' onclick='dashboardUpdate(0)'>
           <i class='bi bi-speedometer2 icon-large'></i>
+        </a>
+      </div>
+      <div class='col'>
+        <a href='#dashboard' id='dashboardFooterIconChat' class='text-dark disabled-link' onclick='dashboardUpdate(2)'>
+          <i class='bi bi-chat icon-large'></i>
         </a>
       </div>
       <div class='col'>

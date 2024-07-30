@@ -10,13 +10,17 @@ export default class CBody {
   };
 
   updateSubinitElm() {
-    this._dashboardIndex = URLParams.getIndex("d-index");
+    let dashboardIndex;
     let dashboardBody = document.getElementById("dashboardBody");
-    return dashboardBody.innerHTML = this._subinitElm()
+
+    if (dashboardBody) {
+      dashboardIndex = URLParams.getIndex("d-index");
+      return dashboardBody.innerHTML = this.subinitElm(dashboardIndex)
+    }
   };
 
-  _subinitElm() {
-    switch (this._dashboardIndex) {
+  subinitElm(dashboardIndex) {
+    switch (dashboardIndex) {
     case 1:
       return `${`
       <div class='col-lg-8 mx-auto'>
@@ -24,6 +28,9 @@ export default class CBody {
         <elm-dashboard-account-settings user-id='${this._userId}'></elm-dashboard-account-settings>
       </div>
       `}`;
+
+    case 2:
+      return `${`\n      <elm-dashboard-chat user-id='${this._userId}'></elm-dashboard-chat>\n      `}`;
 
     default:
       return `${`\n      <elm-dashboard-greeting user-id='${this._userId}'></elm-dashboard-greeting>\n      `}`

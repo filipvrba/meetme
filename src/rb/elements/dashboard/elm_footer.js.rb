@@ -6,12 +6,14 @@ export default class ElmDashboardFooter < HTMLElement
 
     init_elm()
 
-    @icon_map = self.query_selector('#dashboardFooterIconMap')
+    @icon_map  = self.query_selector('#dashboardFooterIconMap')
+    @icon_chat = self.query_selector('#dashboardFooterIconChat')
     
     query = "SELECT id FROM image_avatars WHERE user_id = #{@user_id};"
     __bef_db.get(query) do |rows|
       if rows.length > 0
         @icon_map.class_list.remove('disabled-link')
+        @icon_chat.class_list.remove('disabled-link')
       end
     end
   end
@@ -28,8 +30,13 @@ export default class ElmDashboardFooter < HTMLElement
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
       <div class='col'>
-        <a href='#dashboard' class='text-dark'>
+        <a href='#dashboard' class='text-dark' onclick='dashboardUpdate(0)'>
           <i class='bi bi-speedometer2 icon-large'></i>
+        </a>
+      </div>
+      <div class='col'>
+        <a href='#dashboard' id='dashboardFooterIconChat' class='text-dark disabled-link' onclick='dashboardUpdate(2)'>
+          <i class='bi bi-chat icon-large'></i>
         </a>
       </div>
       <div class='col'>

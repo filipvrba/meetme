@@ -11,19 +11,26 @@ export default class CBody
   end
 
   def update_subinit_elm()
-    @dashboard_index = URLParams.get_index('d-index')
     dashboard_body = document.get_element_by_id('dashboardBody')
-    dashboard_body.innerHTML = _subinit_elm()
+
+    if dashboard_body
+      dashboard_index = URLParams.get_index('d-index')
+      dashboard_body.innerHTML = subinit_elm(dashboard_index)
+    end
   end
 
-  def _subinit_elm()
-    case @dashboard_index
+  def subinit_elm(dashboard_index)
+    case dashboard_index
     when 1
       return """
       <div class='col-lg-8 mx-auto'>
         <elm-alert></elm-alert>
         <elm-dashboard-account-settings user-id='#{@user_id}'></elm-dashboard-account-settings>
       </div>
+      """
+    when 2
+      return """
+      <elm-dashboard-chat user-id='#{@user_id}'></elm-dashboard-chat>
       """
     else
       return """
