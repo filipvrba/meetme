@@ -10,7 +10,7 @@ SELECT
     u.full_name,
     ia.image_base64,
     ud.is_logged,
-    m.created_at
+    MAX(m.created_at) as latest_message
 FROM 
     messages m
 JOIN 
@@ -20,7 +20,9 @@ JOIN
 LEFT JOIN 
     image_avatars ia ON ud.avatar_id = ia.id
 WHERE 
-    m.for_user_id = #{@element.user_id};
+    m.for_user_id = #{@element.user_id}
+GROUP BY 
+    u.id, u.full_name, ia.image_base64, ud.is_logged;
     "
 
     __bef_db.get(query) do |rows|
