@@ -8,7 +8,7 @@ export default class ElmChatMessenger < HTMLElement
     super
     @h_chat_update = lambda { chat_update() }
 
-    @h_chat_menu_li_click = lambda { |e| update_init_elm(e.detail.value) }
+    @h_chat_menu_li_click = lambda { |e| update_init_elm(e.detail.value, true) }
     @h_btn_click = lambda { btn_click() }
     
     @user_id    = self.get_attribute('user-id')
@@ -62,13 +62,13 @@ export default class ElmChatMessenger < HTMLElement
     message_elm.class_list.add('inactive')
   end
 
-  def update_init_elm(id)
+  def update_init_elm(id, sudo = false)
     @id = id
 
     @c_database.get_avatars_with_messages(@id) do |data|
       @c_content = CContent.new(data)
       @container_messages.innerHTML = @c_content.subinit_elm(@id)
-      scroll_down()
+      scroll_down(sudo)
     end
   end
 
@@ -93,11 +93,16 @@ export default class ElmChatMessenger < HTMLElement
     self.innerHTML = template
   end
 
-  def scroll_down()
-    @container_messages.scroll_to({
-      top: @container_messages.scroll_height,
-      behavior: 'smooth'
-    });
+  def scroll_down(sudo = false)
+    current_scroll = @container_messages.scroll_top + @container_messages.client_height
+    max_scroll = @container_messages.scroll_height
+
+    if max_scroll - current_scroll <= 100 || sudo
+      @container_messages.scroll_to({
+        top: @container_messages.scroll_height,
+        behavior: 'smooth'
+      })
+    end
   end
 
   def offline_send_message(date)

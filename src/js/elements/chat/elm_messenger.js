@@ -13,7 +13,7 @@ export default class ElmChatMessenger extends HTMLElement {
       return this.chatUpdate()
     };
 
-    this._hChatMenuLiClick = e => this.updateInitElm(e.detail.value);
+    this._hChatMenuLiClick = e => this.updateInitElm(e.detail.value, true);
 
     this._hBtnClick = () => {
       return this.btnClick()
@@ -65,13 +65,13 @@ export default class ElmChatMessenger extends HTMLElement {
     return messageElm.classList.add("inactive")
   };
 
-  updateInitElm(id) {
+  updateInitElm(id, sudo=false) {
     this._id = id;
 
     return this._cDatabase.getAvatarsWithMessages(this._id, (data) => {
       this._cContent = new CContent(data);
       this._containerMessages.innerHTML = this._cContent.subinitElm(this._id);
-      return this.scrollDown()
+      return this.scrollDown(sudo)
     })
   };
 
@@ -95,11 +95,16 @@ export default class ElmChatMessenger extends HTMLElement {
     return this.innerHTML = template
   };
 
-  scrollDown() {
-    return this._containerMessages.scrollTo({
-      top: this._containerMessages.scrollHeight,
-      behavior: "smooth"
-    })
+  scrollDown(sudo=false) {
+    let currentScroll = this._containerMessages.scrollTop + this._containerMessages.clientHeight;
+    let maxScroll = this._containerMessages.scrollHeight;
+
+    if (maxScroll - currentScroll <= 100 || sudo) {
+      return this._containerMessages.scrollTo({
+        top: this._containerMessages.scrollHeight,
+        behavior: "smooth"
+      })
+    }
   };
 
   offlineSendMessage(date) {
