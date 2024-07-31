@@ -60,4 +60,6 @@ window.customElements.define("elm-chat", ElmChat);
 import ElmChatMenu from "./elements/chat/elm_menu";
 window.customElements.define("elm-chat-menu", ElmChatMenu);
 import ElmChatHeader from "./elements/chat/elm_header";
-window.customElements.define("elm-chat-header", ElmChatHeader)
+window.customElements.define("elm-chat-header", ElmChatHeader);
+import ElmChatMessenger from "./elements/chat/elm_messenger";
+window.customElements.define("elm-chat-messenger", ElmChatMessenger)

@@ -1,6 +1,7 @@
 export default class ElmChatMenu extends HTMLElement {
   constructor() {
     super();
+    this._userId = this.getAttribute("user-id");
     this.initElm()
   };
 

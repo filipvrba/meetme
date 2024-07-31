@@ -2,6 +2,8 @@ export default class ElmChatMenu < HTMLElement
   def initialize
     super
     
+    @user_id = self.get_attribute('user-id')
+
     init_elm()
   end
 

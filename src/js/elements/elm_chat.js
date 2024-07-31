@@ -21,6 +21,7 @@ export default class ElmChat extends AProtectionElement {
     let template = `${`
     <elm-chat-header></elm-chat-header>
     <elm-chat-menu user-id='${this._userId}'></elm-chat-menu>
+    <elm-chat-messenger user-id='${this._userId}'></elm-chat-messenger>
     <elm-dashboard-footer user-id='${this._userId}'></elm-dashboard-footer>
     `}`;
     return this.innerHTML = template

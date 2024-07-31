@@ -46,3 +46,6 @@ window.custom_elements.define('elm-chat-menu', ElmChatMenu)
 
 import 'ElmChatHeader', './elements/chat/elm_header'
 window.custom_elements.define('elm-chat-header', ElmChatHeader)
+
+import 'ElmChatMessenger', './elements/chat/elm_messenger'
+window.custom_elements.define('elm-chat-messenger', ElmChatMessenger)
