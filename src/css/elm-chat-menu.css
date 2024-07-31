@@ -1,0 +1,16 @@
+.offcanvas {
+    bottom: 56.8px;
+}
+
+.offcanvas.offcanvas-start {
+    width: 260px;
+}
+
+.offcanvas-header {
+    padding-top: 0.813rem;
+    padding-bottom: 0.813rem;
+}
+
+.offcanvas-header .btn-close {
+    margin: 0;
+}

@@ -38,5 +38,11 @@ window.custom_elements.define('elm-dashboard-footer', ElmDashboardFooter)
 import 'ElmMapUserDetails', './elements/map/elm_user_details'
 window.custom_elements.define('elm-map-user-details', ElmMapUserDetails)
 
-import 'ElmDashboardChat', './elements/dashboard/elm_chat'
-window.custom_elements.define('elm-dashboard-chat', ElmDashboardChat)
+import 'ElmChat', './elements/elm_chat'
+window.custom_elements.define('elm-chat', ElmChat)
+
+import 'ElmChatMenu', './elements/chat/elm_menu'
+window.custom_elements.define('elm-chat-menu', ElmChatMenu)
+
+import 'ElmChatHeader', './elements/chat/elm_header'
+window.custom_elements.define('elm-chat-header', ElmChatHeader)

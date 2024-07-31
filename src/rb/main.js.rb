@@ -6,6 +6,7 @@ import '../css/elm-spinner.css'
 import '../css/elm-dashboard-header.css'
 import '../css/elm-dashboard-footer.css'
 import '../css/elm-account-settings.css'
+import '../css/elm-chat-menu.css'
 import '../css/style.css'
 
 import './core'

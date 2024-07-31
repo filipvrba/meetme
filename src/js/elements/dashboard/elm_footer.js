@@ -29,12 +29,12 @@ export default class ElmDashboardFooter extends HTMLElement {
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
       <div class='col'>
-        <a href='#dashboard' class='text-dark' onclick='dashboardUpdate(0)'>
+        <a href='#dashboard' class='text-dark'>
           <i class='bi bi-speedometer2 icon-large'></i>
         </a>
       </div>
       <div class='col'>
-        <a href='#dashboard' id='dashboardFooterIconChat' class='text-dark disabled-link' onclick='dashboardUpdate(2)'>
+        <a href='#chat' id='dashboardFooterIconChat' class='text-dark disabled-link'>
           <i class='bi bi-chat icon-large'></i>
         </a>
       </div>

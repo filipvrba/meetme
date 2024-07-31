@@ -8,6 +8,7 @@ import 'mapaHTML', '../../html/mapa.html?raw'
 import 'signupHTML', '../../html/signup.html?raw'
 import 'signinHTML', '../../html/signin.html?raw'
 import 'dashboardHTML', '../../html/dashboard.html?raw'
+import 'chatHTML', '../../html/chat.html?raw'
 
 window.PAGES = {
   error: errorHTML,
@@ -16,4 +17,5 @@ window.PAGES = {
   signup: signupHTML,
   signin: signinHTML,
   dashboard: dashboardHTML,
+  chat: chatHTML,
 }

@@ -29,9 +29,6 @@ export default class CBody {
       </div>
       `}`;
 
-    case 2:
-      return `${`\n      <elm-dashboard-chat user-id='${this._userId}'></elm-dashboard-chat>\n      `}`;
-
     default:
       return `${`\n      <elm-dashboard-greeting user-id='${this._userId}'></elm-dashboard-greeting>\n      `}`
     }

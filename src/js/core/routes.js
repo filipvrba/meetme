@@ -6,6 +6,7 @@ import mapaHTML from "../../html/mapa.html?raw";
 import signupHTML from "../../html/signup.html?raw";
 import signinHTML from "../../html/signin.html?raw";
 import dashboardHTML from "../../html/dashboard.html?raw";
+import chatHTML from "../../html/chat.html?raw";
 
 window.PAGES = {
   error: errorHTML,
@@ -13,5 +14,6 @@ window.PAGES = {
   mapa: mapaHTML,
   signup: signupHTML,
   signin: signinHTML,
-  dashboard: dashboardHTML
+  dashboard: dashboardHTML,
+  chat: chatHTML
 }

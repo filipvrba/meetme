@@ -28,10 +28,6 @@ export default class CBody
         <elm-dashboard-account-settings user-id='#{@user_id}'></elm-dashboard-account-settings>
       </div>
       """
-    when 2
-      return """
-      <elm-dashboard-chat user-id='#{@user_id}'></elm-dashboard-chat>
-      """
     else
       return """
       <elm-dashboard-greeting user-id='#{@user_id}'></elm-dashboard-greeting>

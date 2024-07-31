@@ -55,5 +55,9 @@ window.customElements.define(
   ElmMapUserDetails
 );
 
-import ElmDashboardChat from "./elements/dashboard/elm_chat";
-window.customElements.define("elm-dashboard-chat", ElmDashboardChat)
+import ElmChat from "./elements/elm_chat";
+window.customElements.define("elm-chat", ElmChat);
+import ElmChatMenu from "./elements/chat/elm_menu";
+window.customElements.define("elm-chat-menu", ElmChatMenu);
+import ElmChatHeader from "./elements/chat/elm_header";
+window.customElements.define("elm-chat-header", ElmChatHeader)

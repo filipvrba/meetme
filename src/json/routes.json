@@ -29,6 +29,11 @@
       "title": "Dashboard",
       "endpoint": "dashboard",
       "priority": 1
+    },
+    {
+      "title": "Chat",
+      "endpoint": "chat",
+      "priority": 1
     }
   ]
 }
