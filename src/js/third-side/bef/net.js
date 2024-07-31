@@ -28,7 +28,10 @@ function befSend(method, query, isVerbose=true, callback) {
     } else if (callback) {
       return callback(true)
     }
-  }).catch(err => Events.emit("#app", "befError", err))
+  }).catch((err) => {
+    if (isVerbose) console.error(err);
+    return Events.emit("#app", "befError", err)
+  })
 };
 
 Net.prototype.constructor.befSend = befSend

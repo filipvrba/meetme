@@ -43,6 +43,7 @@ def bef_send(method, query, is_verbose = true, &callback)
     end
   end)
   .catch(lambda do |err|
+    console.error(err) if is_verbose
     Events.emit('#app', 'befError', err)
   end)
 end

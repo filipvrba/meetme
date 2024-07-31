@@ -3,6 +3,8 @@ import 'AProtectionElement', './abstracts/protection_element'
 export default class ElmChat < AProtectionElement
   def initialize
     super
+
+    @timeout_id = nil
   end
 
   def initialize_protected()
@@ -11,10 +13,20 @@ export default class ElmChat < AProtectionElement
 
   def connected_callback()
     super
+
+    update()
   end
 
   def disconnected_callback()
     super
+
+    clear_timeout(@timeout_id)
+  end
+
+  def update()
+    Events.emit('#app', 'chatUpdate')
+
+    @timeout_id = set_timeout(update, 10_000)
   end
 
   def init_elm()

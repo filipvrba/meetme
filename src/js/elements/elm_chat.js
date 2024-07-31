@@ -2,7 +2,8 @@ import AProtectionElement from "./abstracts/protection_element";
 
 export default class ElmChat extends AProtectionElement {
   constructor() {
-    super()
+    super();
+    this._timeoutId = null
   };
 
   initializeProtected() {
@@ -10,11 +11,19 @@ export default class ElmChat extends AProtectionElement {
   };
 
   connectedCallback() {
-    return super.connectedCallback()
+    super.connectedCallback();
+    return this.update()
   };
 
   disconnectedCallback() {
-    return super.disconnectedCallback()
+    super.disconnectedCallback();
+    return clearTimeout(this._timeoutId)
+  };
+
+  update() {
+    Events.emit("#app", "chatUpdate");
+    this._timeoutId = setTimeout(this.update.bind(this), 10_000);
+    return this._timeoutId
   };
 
   initElm() {

@@ -1,16 +1,21 @@
-.offcanvas {
-    bottom: 56.8px;
-}
-
-.offcanvas.offcanvas-start {
+elm-chat-menu .offcanvas.offcanvas-start {
     width: 260px;
 }
 
-.offcanvas-header {
+elm-chat-menu .offcanvas-header {
     padding-top: 0.813rem;
     padding-bottom: 0.813rem;
 }
 
-.offcanvas-header .btn-close {
+elm-chat-menu .offcanvas-header .btn-close {
     margin: 0;
+}
+
+elm-chat-menu .list-group-item {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+elm-chat-menu .list-group-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
 }

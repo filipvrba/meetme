@@ -3,3 +3,7 @@
     padding-top: 58px;
     padding-bottom: 56.8px;
 }
+
+.inactive {
+    opacity: 0.6;
+}
