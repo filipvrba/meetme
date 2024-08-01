@@ -1,4 +1,8 @@
 export default class CDatabase
+  def initialize(element)
+    @element = element
+  end
+
   def get_details(user_id, &callback)
     query = "
 SELECT 
@@ -19,6 +23,15 @@ WHERE
       if rows.length > 0
         callback(rows[0]) if callback
       end
+    end
+  end
+
+  def start_conversation(for_user_id, message, &callback)
+    query = "INSERT INTO messages (user_id, for_user_id, message) " +
+            "VALUES (#{@element.user_id}, #{for_user_id}, #{message.encode_base64()});"
+            
+    __bef_db.set(query) do |is_started|
+      callback(is_started) if is_started
     end
   end
 end

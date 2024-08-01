@@ -16,8 +16,8 @@ class Vector {
   };
 
   constructor(x, y) {
-    this._x = x;
-    this._y = y
+    this._x = parseFloat(x);
+    this._y = parseFloat(y)
   };
 
   //# Lineární interpolace

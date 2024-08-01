@@ -1,4 +1,8 @@
 export default class CDatabase {
+  constructor(element) {
+    this._element = element
+  };
+
   getDetails(userId, callback) {
     let query = `
 SELECT 
@@ -17,6 +21,14 @@ WHERE
 
     return _BefDb.get(query, (rows) => {
       if (rows.length > 0) if (callback) return callback(rows[0])
+    })
+  };
+
+  startConversation(forUserId, message, callback) {
+    let query = `INSERT INTO messages (user_id, for_user_id, message) VALUES (${this._element.userId}, ${forUserId}, ${message.encodeBase64()});`;
+
+    return _BefDb.set(query, (isStarted) => {
+      if (isStarted) return callback(isStarted)
     })
   }
 }
