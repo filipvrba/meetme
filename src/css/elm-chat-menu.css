@@ -19,3 +19,7 @@ elm-chat-menu .list-group-item:hover {
     background-color: #f0f0f0;
     cursor: pointer;
 }
+
+elm-chat-menu .notification-display {
+    display: none;
+}

@@ -7,6 +7,7 @@ export default class ElmChatMessenger < HTMLElement
   def initialize
     super
     @h_chat_update = lambda { chat_update() }
+    @h_chat_notifications = lambda { |e| chat_notifications(e.detail.value) }
 
     @h_chat_menu_li_click = lambda { |e| update_init_elm(e.detail.value, true) }
     @h_btn_click = lambda { btn_click() }
@@ -26,12 +27,33 @@ export default class ElmChatMessenger < HTMLElement
     Events.connect('#app', 'chatMenuLiClick', @h_chat_menu_li_click)
     @btn.add_event_listener('click', @h_btn_click)
     Events.connect('#app', 'chatUpdate', @h_chat_update)
+    Events.connect('#app', 'chatNotifications', @h_chat_notifications)
   end
 
   def disconnected_callback()
     Events.disconnect('#app', 'chatMenuLiClick', @h_chat_menu_li_click)
     @btn.remove_event_listener('click', @h_btn_click)
     Events.disconnect('#app', 'chatUpdate', @h_chat_update)
+    Events.disconnect('#app', 'chatNotifications', @h_chat_notifications)
+  end
+
+  def chat_notifications(rows)
+    unless @id
+      return
+    end
+
+    result = []
+    rows.each do |row|
+      if @id == row['user_id'].to_i
+        result.push(row['notification_id'])
+      end
+    end
+
+    unless result.length > 0
+      return
+    end
+
+    @c_database.delete_notifications(result)
   end
 
   def chat_update()

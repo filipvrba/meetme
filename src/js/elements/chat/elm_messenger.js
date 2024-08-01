@@ -13,6 +13,7 @@ export default class ElmChatMessenger extends HTMLElement {
       return this.chatUpdate()
     };
 
+    this._hChatNotifications = e => this.chatNotifications(e.detail.value);
     this._hChatMenuLiClick = e => this.updateInitElm(e.detail.value, true);
 
     this._hBtnClick = () => {
@@ -31,13 +32,37 @@ export default class ElmChatMessenger extends HTMLElement {
   connectedCallback() {
     Events.connect("#app", "chatMenuLiClick", this._hChatMenuLiClick);
     this._btn.addEventListener("click", this._hBtnClick);
-    return Events.connect("#app", "chatUpdate", this._hChatUpdate)
+    Events.connect("#app", "chatUpdate", this._hChatUpdate);
+
+    return Events.connect(
+      "#app",
+      "chatNotifications",
+      this._hChatNotifications
+    )
   };
 
   disconnectedCallback() {
     Events.disconnect("#app", "chatMenuLiClick", this._hChatMenuLiClick);
     this._btn.removeEventListener("click", this._hBtnClick);
-    return Events.disconnect("#app", "chatUpdate", this._hChatUpdate)
+    Events.disconnect("#app", "chatUpdate", this._hChatUpdate);
+
+    return Events.disconnect(
+      "#app",
+      "chatNotifications",
+      this._hChatNotifications
+    )
+  };
+
+  chatNotifications(rows) {
+    if (!this._id) return;
+    let result = [];
+
+    for (let row of rows) {
+      if (this._id === parseInt(row.user_id)) result.push(row.notification_id)
+    };
+
+    if (result.length <= 0) return;
+    return this._cDatabase.deleteNotifications(result)
   };
 
   chatUpdate() {

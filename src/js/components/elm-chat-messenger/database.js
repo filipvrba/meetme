@@ -73,5 +73,13 @@ ORDER BY
     return _BefDb.set(query, (isSent) => {
       if (callback) return callback(isSent)
     })
+  };
+
+  deleteNotifications(ids, callback) {
+    let query = `DELETE FROM notifications WHERE id IN (${ids.join(", ")});`;
+
+    return _BefDb.set(query, (isDeleted) => {
+      if (callback) return callback(isDeleted)
+    })
   }
 }

@@ -12,20 +12,34 @@ export default class ElmChatMenu extends HTMLElement {
       return this.chatUpdate()
     };
 
+    this._hChatNotifications = e => this.chatNotifications(e.detail.value);
     this._userId = this.getAttribute("user-id");
     this.initElm();
     this._menuList = this.querySelector("#chatMenuList");
+    this._containerNotification = this.querySelector("#chatMenuContainerNotification");
     this._cDatabase = new CDatabase(this);
     this.chatUpdate();
     window.chatMenuLiClick = this.chatMenuLiClick.bind(this)
   };
 
   connectedCallback() {
-    return Events.connect("#app", "chatUpdate", this._hChatUpdate)
+    Events.connect("#app", "chatUpdate", this._hChatUpdate);
+
+    return Events.connect(
+      "#app",
+      "chatNotifications",
+      this._hChatNotifications
+    )
   };
 
   disconnectedCallback() {
-    return Events.disconnect("#app", "chatUpdate", this._hChatUpdate)
+    Events.disconnect("#app", "chatUpdate", this._hChatUpdate);
+
+    return Events.disconnect(
+      "#app",
+      "chatNotifications",
+      this._hChatNotifications
+    )
   };
 
   chatMenuLiClick(id) {
@@ -33,9 +47,15 @@ export default class ElmChatMenu extends HTMLElement {
     return Events.emit("#app", "chatMenuLiClick", id)
   };
 
+  chatNotifications(rows) {
+    this._notifications = rows;
+    return this._notifications
+  };
+
   chatUpdate() {
     return this._cDatabase.getAllRelevantUsers((rows) => {
-      if (rows) return this.subinitElm(rows)
+      if (rows) this.subinitElm(rows);
+      return this.updateNotificationsSubinitElm()
     })
   };
 
@@ -64,6 +84,12 @@ export default class ElmChatMenu extends HTMLElement {
       let isLogged = parseInt(row.is_logged) === 1 ? "<small class=\"text-success\">Online</small>" : "<small class=\"text-danger\">Offline</small>";
       let template = `${`
       <li class='list-group-item d-flex align-items-center' onclick='chatMenuLiClick(${id})'>
+        <div id='chatMenuContainerNotification${id}' class='notification-display'>
+          <span class='position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle'>
+            <span class='visually-hidden'>New alerts</span>
+          </span>
+        </div>
+
         <img src='${img}' class='rounded-circle' width='40' height='40' alt='Avatar ${fullName}'>
         <div style='margin-left: 12px;'>
           <h6 class='mb-0'>${fullName}</h6>
@@ -75,5 +101,15 @@ export default class ElmChatMenu extends HTMLElement {
     };
 
     return this._menuList.innerHTML = result.join("")
+  };
+
+  updateNotificationsSubinitElm() {
+    if (!this._notifications) return;
+
+    for (let notification of this._notifications) {
+      let id = notification.user_id;
+      let notificationElm = this.querySelector(`#chatMenuContainerNotification${id}`);
+      if (notificationElm) notificationElm.classList.remove("notification-display")
+    }
   }
 }

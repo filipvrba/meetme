@@ -6,12 +6,14 @@ export default class ElmChatMenu < HTMLElement
   def initialize
     super
     @h_chat_update = lambda { chat_update() }
+    @h_chat_notifications = lambda { |e| chat_notifications(e.detail.value) }
     
     @user_id = self.get_attribute('user-id')
 
     init_elm()
 
     @menu_list = self.query_selector('#chatMenuList')
+    @container_notification = self.query_selector('#chatMenuContainerNotification')
 
     @c_database = CDatabase.new(self)
     chat_update()
@@ -21,10 +23,12 @@ export default class ElmChatMenu < HTMLElement
 
   def connected_callback()
     Events.connect('#app', 'chatUpdate', @h_chat_update)
+    Events.connect('#app', 'chatNotifications', @h_chat_notifications)
   end
 
   def disconnected_callback()
     Events.disconnect('#app', 'chatUpdate', @h_chat_update)
+    Events.disconnect('#app', 'chatNotifications', @h_chat_notifications)
   end
 
   def chat_menu_li_click(id)
@@ -32,9 +36,14 @@ export default class ElmChatMenu < HTMLElement
     Events.emit('#app', 'chatMenuLiClick', id)
   end
 
+  def chat_notifications(rows)
+    @notifications = rows
+  end
+
   def chat_update()
     @c_database.get_all_relevant_users() do |rows|
       subinit_elm(rows) if rows
+      update_notifications_subinit_elm()
     end
   end
 
@@ -67,6 +76,12 @@ export default class ElmChatMenu < HTMLElement
 
       template = """
       <li class='list-group-item d-flex align-items-center' onclick='chatMenuLiClick(#{id})'>
+        <div id='chatMenuContainerNotification#{id}' class='notification-display'>
+          <span class='position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle'>
+            <span class='visually-hidden'>New alerts</span>
+          </span>
+        </div>
+
         <img src='#{img}' class='rounded-circle' width='40' height='40' alt='Avatar #{full_name}'>
         <div style='margin-left: 12px;'>
           <h6 class='mb-0'>#{full_name}</h6>
@@ -78,5 +93,17 @@ export default class ElmChatMenu < HTMLElement
     end
 
     @menu_list.innerHTML = result.join('')
+  end
+
+  def update_notifications_subinit_elm()
+    unless @notifications
+      return
+    end
+
+    @notifications.each do |notification|
+      id = notification['user_id']
+      notification_elm = self.query_selector("#chatMenuContainerNotification#{id}")
+      notification_elm.class_list.remove('notification-display') if notification_elm
+    end
   end
 end

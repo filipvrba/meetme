@@ -76,4 +76,12 @@ ORDER BY
       callback(is_sent) if callback
     end
   end
+
+  def delete_notifications(ids, &callback)
+    query = "DELETE FROM notifications WHERE id IN (#{ids.join(', ')});"
+
+    __bef_db.set(query) do |is_deleted|
+      callback(is_deleted) if callback
+    end
+  end
 end

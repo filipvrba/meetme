@@ -1,6 +1,9 @@
 import 'AProtectionElement', './abstracts/protection_element'
+import 'CDatabase', '../components/elm-chat/database'
 
 export default class ElmChat < AProtectionElement
+  attr_reader :user_id
+
   def initialize
     super
 
@@ -9,12 +12,14 @@ export default class ElmChat < AProtectionElement
 
   def initialize_protected()
     init_elm()
+
+    @c_database = CDatabase.new(self)
+
+    update()
   end
 
   def connected_callback()
     super
-
-    update()
   end
 
   def disconnected_callback()
@@ -25,7 +30,8 @@ export default class ElmChat < AProtectionElement
 
   def update()
     Events.emit('#app', 'chatUpdate')
-
+    notifications()
+    
     @timeout_id = set_timeout(update, 10_000)
   end
 
@@ -38,5 +44,15 @@ export default class ElmChat < AProtectionElement
     """
 
     self.innerHTML = template
+  end
+
+  def notifications()
+    @c_database.get_notifications() do |rows|
+      unless rows
+        return
+      end
+
+      Events.emit('#app', 'chatNotifications', rows)
+    end
   end
 end
