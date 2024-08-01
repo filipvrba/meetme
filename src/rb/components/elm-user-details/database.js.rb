@@ -28,8 +28,8 @@ WHERE
 
   def start_conversation(for_user_id, message, &callback)
     query = "INSERT INTO messages (user_id, for_user_id, message) " +
-            "VALUES (#{@element.user_id}, #{for_user_id}, #{message.encode_base64()});"
-            
+            "VALUES (#{@element.user_id}, #{for_user_id}, '#{message.encode_base64()}');"
+
     __bef_db.set(query) do |is_started|
       callback(is_started) if is_started
     end

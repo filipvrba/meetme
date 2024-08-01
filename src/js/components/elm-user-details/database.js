@@ -25,7 +25,7 @@ WHERE
   };
 
   startConversation(forUserId, message, callback) {
-    let query = `INSERT INTO messages (user_id, for_user_id, message) VALUES (${this._element.userId}, ${forUserId}, ${message.encodeBase64()});`;
+    let query = `INSERT INTO messages (user_id, for_user_id, message) VALUES (${this._element.userId}, ${forUserId}, '${message.encodeBase64()}');`;
 
     return _BefDb.set(query, (isStarted) => {
       if (isStarted) return callback(isStarted)
