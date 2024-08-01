@@ -28,7 +28,6 @@ export default class ElmChat extends AProtectionElement {
 
   update() {
     Events.emit("#app", "chatUpdate");
-    this.notifications();
     this._timeoutId = setTimeout(this.update.bind(this), 10_000);
     return this._timeoutId
   };
@@ -41,12 +40,5 @@ export default class ElmChat extends AProtectionElement {
     <elm-dashboard-footer user-id='${this._userId}'></elm-dashboard-footer>
     `}`;
     return this.innerHTML = template
-  };
-
-  notifications() {
-    return this._cDatabase.getNotifications((rows) => {
-      if (!rows) return;
-      return Events.emit("#app", "chatNotifications", rows)
-    })
   }
 }

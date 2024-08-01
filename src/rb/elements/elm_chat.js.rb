@@ -30,8 +30,7 @@ export default class ElmChat < AProtectionElement
 
   def update()
     Events.emit('#app', 'chatUpdate')
-    notifications()
-    
+
     @timeout_id = set_timeout(update, 10_000)
   end
 
@@ -44,15 +43,5 @@ export default class ElmChat < AProtectionElement
     """
 
     self.innerHTML = template
-  end
-
-  def notifications()
-    @c_database.get_notifications() do |rows|
-      unless rows
-        return
-      end
-
-      Events.emit('#app', 'chatNotifications', rows)
-    end
   end
 end

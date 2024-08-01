@@ -12,7 +12,6 @@ export default class ElmChatMenu extends HTMLElement {
       return this.chatUpdate()
     };
 
-    this._hChatNotifications = e => this.chatNotifications(e.detail.value);
     this._userId = this.getAttribute("user-id");
     this.initElm();
     this._menuList = this.querySelector("#chatMenuList");
@@ -23,23 +22,11 @@ export default class ElmChatMenu extends HTMLElement {
   };
 
   connectedCallback() {
-    Events.connect("#app", "chatUpdate", this._hChatUpdate);
-
-    return Events.connect(
-      "#app",
-      "chatNotifications",
-      this._hChatNotifications
-    )
+    return Events.connect("#app", "chatUpdate", this._hChatUpdate)
   };
 
   disconnectedCallback() {
-    Events.disconnect("#app", "chatUpdate", this._hChatUpdate);
-
-    return Events.disconnect(
-      "#app",
-      "chatNotifications",
-      this._hChatNotifications
-    )
+    return Events.disconnect("#app", "chatUpdate", this._hChatUpdate)
   };
 
   chatMenuLiClick(id) {
@@ -47,15 +34,14 @@ export default class ElmChatMenu extends HTMLElement {
     return Events.emit("#app", "chatMenuLiClick", id)
   };
 
-  chatNotifications(rows) {
-    this._notifications = rows;
-    return this._notifications
-  };
-
   chatUpdate() {
     return this._cDatabase.getAllRelevantUsers((rows) => {
       if (rows) this.subinitElm(rows);
-      return this.updateNotificationsSubinitElm()
+
+      return this._cDatabase.getNotifications((rows) => {
+        this.updateNotificationsSubinitElm(rows);
+        return Events.emit("#app", "chatNotifications", rows)
+      })
     })
   };
 
@@ -103,10 +89,8 @@ export default class ElmChatMenu extends HTMLElement {
     return this._menuList.innerHTML = result.join("")
   };
 
-  updateNotificationsSubinitElm() {
-    if (!this._notifications) return;
-
-    for (let notification of this._notifications) {
+  updateNotificationsSubinitElm(rows) {
+    for (let notification of rows) {
       let id = notification.user_id;
       let notificationElm = this.querySelector(`#chatMenuContainerNotification${id}`);
       if (notificationElm) notificationElm.classList.remove("notification-display")

@@ -6,7 +6,6 @@ export default class ElmChatMenu < HTMLElement
   def initialize
     super
     @h_chat_update = lambda { chat_update() }
-    @h_chat_notifications = lambda { |e| chat_notifications(e.detail.value) }
     
     @user_id = self.get_attribute('user-id')
 
@@ -23,12 +22,10 @@ export default class ElmChatMenu < HTMLElement
 
   def connected_callback()
     Events.connect('#app', 'chatUpdate', @h_chat_update)
-    Events.connect('#app', 'chatNotifications', @h_chat_notifications)
   end
 
   def disconnected_callback()
     Events.disconnect('#app', 'chatUpdate', @h_chat_update)
-    Events.disconnect('#app', 'chatNotifications', @h_chat_notifications)
   end
 
   def chat_menu_li_click(id)
@@ -36,14 +33,14 @@ export default class ElmChatMenu < HTMLElement
     Events.emit('#app', 'chatMenuLiClick', id)
   end
 
-  def chat_notifications(rows)
-    @notifications = rows
-  end
-
   def chat_update()
     @c_database.get_all_relevant_users() do |rows|
       subinit_elm(rows) if rows
-      update_notifications_subinit_elm()
+      
+      @c_database.get_notifications() do |rows|
+        update_notifications_subinit_elm(rows)
+        Events.emit('#app', 'chatNotifications', rows)
+      end
     end
   end
 
@@ -95,12 +92,8 @@ export default class ElmChatMenu < HTMLElement
     @menu_list.innerHTML = result.join('')
   end
 
-  def update_notifications_subinit_elm()
-    unless @notifications
-      return
-    end
-
-    @notifications.each do |notification|
+  def update_notifications_subinit_elm(rows)
+    rows.each do |notification|
       id = notification['user_id']
       notification_elm = self.query_selector("#chatMenuContainerNotification#{id}")
       notification_elm.class_list.remove('notification-display') if notification_elm
