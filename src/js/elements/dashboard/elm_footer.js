@@ -1,26 +1,30 @@
+import ElmAlert from "../elm_alert";
+
 export default class ElmDashboardFooter extends HTMLElement {
   constructor() {
     super();
+    this._hAlertShow = e => this.alertShow(e.detail.value);
     this._userId = this.getAttribute("user-id");
     this.initElm();
     this._iconMap = this.querySelector("#dashboardFooterIconMap");
     this._iconChat = this.querySelector("#dashboardFooterIconChat");
-    let query = `SELECT id FROM image_avatars WHERE user_id = ${this._userId};`;
-
-    _BefDb.get(query, (rows) => {
-      if (rows.length > 0) {
-        this._iconMap.classList.remove("disabled-link");
-        return this._iconChat.classList.remove("disabled-link")
-      }
-    })
+    this.updateSubinitElm()
   };
 
   connectedCallback() {
-    return null
+    return Events.connect("#app", ElmAlert.ENVS.SHOW, this._hAlertShow)
   };
 
   disconnectedCallback() {
-    return null
+    return Events.disconnect(
+      "#app",
+      ElmAlert.ENVS.SHOW,
+      this._hAlertShow
+    )
+  };
+
+  alertShow(data) {
+    if (data.style === "success") return this.updateSubinitElm()
   };
 
   initElm() {
@@ -48,5 +52,16 @@ export default class ElmDashboardFooter extends HTMLElement {
 </footer>
     `}`;
     return this.innerHTML = template
+  };
+
+  updateSubinitElm() {
+    let query = `SELECT id FROM image_avatars WHERE user_id = ${this._userId};`;
+
+    return _BefDb.get(query, (rows) => {
+      if (rows.length > 0) {
+        this._iconMap.classList.remove("disabled-link");
+        return this._iconChat.classList.remove("disabled-link")
+      }
+    })
   }
 }
