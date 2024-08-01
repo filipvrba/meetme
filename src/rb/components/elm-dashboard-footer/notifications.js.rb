@@ -33,17 +33,10 @@ export default class CNotifications
 
   def sign()
     play_sound()
-    vibrate()
   end
 
   def play_sound()
     audio = Audio.new('/mp3/message.mp3')
     audio.play()
-  end
-
-  def vibrate()
-    if navigator.vibrate
-      navigator.vibrate(200)
-    end
   end
 end

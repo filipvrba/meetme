@@ -37,16 +37,11 @@ export default class CNotifications {
   };
 
   sign() {
-    this.playSound();
-    return this.vibrate()
+    return this.playSound()
   };
 
   playSound() {
     let audio = new Audio("/mp3/message.mp3");
     return audio.play()
-  };
-
-  vibrate() {
-    if (navigator.vibrate) return navigator.vibrate(200)
   }
 }
