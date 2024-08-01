@@ -20,6 +20,7 @@ export default class ElmChatMessenger extends HTMLElement {
       return this.btnClick()
     };
 
+    this._hInputKeypress = e => this.inputKeypress(e);
     this._userId = this.getAttribute("user-id");
     this._id = null;
     this._cDatabase = new CDatabse(this);
@@ -33,12 +34,8 @@ export default class ElmChatMessenger extends HTMLElement {
     Events.connect("#app", "chatMenuLiClick", this._hChatMenuLiClick);
     this._btn.addEventListener("click", this._hBtnClick);
     Events.connect("#app", "chatUpdate", this._hChatUpdate);
-
-    return Events.connect(
-      "#app",
-      "chatNotifications",
-      this._hChatNotifications
-    )
+    Events.connect("#app", "chatNotifications", this._hChatNotifications);
+    return this._input.addEventListener("keypress", this._hInputKeypress)
   };
 
   disconnectedCallback() {
@@ -46,11 +43,20 @@ export default class ElmChatMessenger extends HTMLElement {
     this._btn.removeEventListener("click", this._hBtnClick);
     Events.disconnect("#app", "chatUpdate", this._hChatUpdate);
 
-    return Events.disconnect(
+    Events.disconnect(
       "#app",
       "chatNotifications",
       this._hChatNotifications
+    );
+
+    return this._input.removeEventListener(
+      "keypress",
+      this._hInputKeypress
     )
+  };
+
+  inputKeypress(event) {
+    if (event.key === "Enter") return this._btn.click()
   };
 
   chatNotifications(rows) {

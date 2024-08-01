@@ -11,6 +11,7 @@ export default class ElmChatMessenger < HTMLElement
 
     @h_chat_menu_li_click = lambda { |e| update_init_elm(e.detail.value, true) }
     @h_btn_click = lambda { btn_click() }
+    @h_input_keypress = lambda { |e| input_keypress(e) }
     
     @user_id    = self.get_attribute('user-id')
     @id         = nil
@@ -28,6 +29,7 @@ export default class ElmChatMessenger < HTMLElement
     @btn.add_event_listener('click', @h_btn_click)
     Events.connect('#app', 'chatUpdate', @h_chat_update)
     Events.connect('#app', 'chatNotifications', @h_chat_notifications)
+    @input.add_event_listener('keypress', @h_input_keypress)
   end
 
   def disconnected_callback()
@@ -35,6 +37,13 @@ export default class ElmChatMessenger < HTMLElement
     @btn.remove_event_listener('click', @h_btn_click)
     Events.disconnect('#app', 'chatUpdate', @h_chat_update)
     Events.disconnect('#app', 'chatNotifications', @h_chat_notifications)
+    @input.remove_event_listener('keypress', @h_input_keypress)
+  end
+
+  def input_keypress(event)
+    if event.key == 'Enter'
+      @btn.click()
+    end
   end
 
   def chat_notifications(rows)
