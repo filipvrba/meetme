@@ -1,6 +1,15 @@
 import ElmAlert from "../elm_alert";
+import CNotifications from "../../components/elm-dashboard-footer/notifications";
 
 export default class ElmDashboardFooter extends HTMLElement {
+  get userId() {
+    return this._userId
+  };
+
+  get notification() {
+    return this._notification
+  };
+
   constructor() {
     super();
     this._hAlertShow = e => this.alertShow(e.detail.value);
@@ -14,6 +23,8 @@ export default class ElmDashboardFooter extends HTMLElement {
     this._iconDashboard = this.querySelector("#dashboardFooterIconDashboard");
     this._iconMap = this.querySelector("#dashboardFooterIconMap");
     this._iconChat = this.querySelector("#dashboardFooterIconChat");
+    this._notification = this.querySelector("#dashFooterNotification");
+    this._cNotifications = new CNotifications(this);
     this.updateSubinitElm()
   };
 
@@ -29,10 +40,12 @@ export default class ElmDashboardFooter extends HTMLElement {
   disconnectedCallback() {
     Events.disconnect("#app", ElmAlert.ENVS.SHOW, this._hAlertShow);
 
-    return this._iconDashboard.removeEventListener(
+    this._iconDashboard.removeEventListener(
       "click",
       this._hIconDashboardClick
-    )
+    );
+
+    return this._cNotifications.dispose()
   };
 
   iconDashboardClick() {
@@ -55,7 +68,11 @@ export default class ElmDashboardFooter extends HTMLElement {
       </div>
       <div class='col'>
         <a href='#chat' id='dashboardFooterIconChat' class='text-dark disabled-link'>
-          <i class='bi bi-chat icon-large'></i>
+          <i class='bi bi-chat icon-large'>
+            <span id='dashFooterNotification' style='top: 10px;' class='position-absolute translate-middle p-2 bg-danger border border-light rounded-circle notification-display'>
+              <span class='visually-hidden'>New alerts</span>
+            </span>
+          </i>
         </a>
       </div>
       <div class='col'>
@@ -76,7 +93,8 @@ export default class ElmDashboardFooter extends HTMLElement {
     return _BefDb.get(query, (rows) => {
       if (rows.length > 0) {
         this._iconMap.classList.remove("disabled-link");
-        return this._iconChat.classList.remove("disabled-link")
+        this._iconChat.classList.remove("disabled-link");
+        return this._cNotifications.update()
       }
     })
   }

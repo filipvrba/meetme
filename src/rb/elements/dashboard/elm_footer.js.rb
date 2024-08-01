@@ -1,19 +1,25 @@
 import 'ElmAlert', '../elm_alert'
+import 'CNotifications', '../../components/elm-dashboard-footer/notifications'
 
 export default class ElmDashboardFooter < HTMLElement
+  attr_reader :user_id, :notification
+
   def initialize
     super
     @h_alert_show           = lambda { |e| alert_show(e.detail.value) }
     @h_icon_dashboard_click = lambda { icon_dashboard_click() }
 
-    @user_id = self.get_attribute('user-id')
+    @user_id    = self.get_attribute('user-id')
 
     init_elm()
 
     @icon_dashboard = self.query_selector('#dashboardFooterIconDashboard')
     @icon_map       = self.query_selector('#dashboardFooterIconMap')
     @icon_chat      = self.query_selector('#dashboardFooterIconChat')
-    
+    @notification   = self.query_selector('#dashFooterNotification')
+
+    @c_notifications = CNotifications.new(self)
+
     update_subinit_elm()
   end
 
@@ -25,6 +31,8 @@ export default class ElmDashboardFooter < HTMLElement
   def disconnected_callback()
     Events.disconnect('#app', ElmAlert::ENVS::SHOW, @h_alert_show)
     @icon_dashboard.remove_event_listener('click', @h_icon_dashboard_click)
+
+    @c_notifications.dispose()
   end
 
   def icon_dashboard_click()
@@ -49,7 +57,11 @@ export default class ElmDashboardFooter < HTMLElement
       </div>
       <div class='col'>
         <a href='#chat' id='dashboardFooterIconChat' class='text-dark disabled-link'>
-          <i class='bi bi-chat icon-large'></i>
+          <i class='bi bi-chat icon-large'>
+            <span id='dashFooterNotification' style='top: 10px;' class='position-absolute translate-middle p-2 bg-danger border border-light rounded-circle notification-display'>
+              <span class='visually-hidden'>New alerts</span>
+            </span>
+          </i>
         </a>
       </div>
       <div class='col'>
@@ -71,6 +83,8 @@ export default class ElmDashboardFooter < HTMLElement
       if rows.length > 0
         @icon_map.class_list.remove('disabled-link')
         @icon_chat.class_list.remove('disabled-link')
+
+        @c_notifications.update()
       end
     end
   end

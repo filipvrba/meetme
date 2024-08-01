@@ -20,6 +20,6 @@ elm-chat-menu .list-group-item:hover {
     cursor: pointer;
 }
 
-elm-chat-menu .notification-display {
+.notification-display {
     display: none;
 }

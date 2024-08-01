@@ -11,6 +11,7 @@ import '../css/elm-chat-messenger.css'
 import '../css/style.css'
 
 import './core'
+import './singleton'
 import './elements'
 import './math'
 import './third_side'
