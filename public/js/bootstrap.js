@@ -2874,6 +2874,9 @@
         }
         EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED);
       });
+      EventHandler.on(this._element, 'offcanvas.hide', event => {
+        this.hide();
+      });
     }
 
     // Static
