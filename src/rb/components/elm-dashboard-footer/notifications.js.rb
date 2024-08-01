@@ -18,7 +18,7 @@ export default class CNotifications
       if have_notifications
         unless window.is_notification_played
           window.is_notification_played = true
-          play_sound()
+          sign()
         end
 
         @element.notification.class_list.remove('notification-display')
@@ -31,8 +31,19 @@ export default class CNotifications
     @timeout_id = set_timeout(update, 10_000)
   end
 
+  def sign()
+    play_sound()
+    vibrate()
+  end
+
   def play_sound()
     audio = Audio.new('/mp3/message.mp3')
     audio.play()
+  end
+
+  def vibrate()
+    if navigator.vibrate
+      navigator.vibrate(200)
+    end
   end
 end

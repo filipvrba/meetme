@@ -21,7 +21,7 @@ export default class CNotifications {
         if (haveNotifications) {
           if (!window.isNotificationPlayed) {
             window.isNotificationPlayed = true;
-            this.playSound()
+            this.sign()
           };
 
           return this._element.notification.classList.remove("notification-display")
@@ -36,8 +36,17 @@ export default class CNotifications {
     return this._timeoutId
   };
 
+  sign() {
+    this.playSound();
+    return this.vibrate()
+  };
+
   playSound() {
     let audio = new Audio("/mp3/message.mp3");
     return audio.play()
+  };
+
+  vibrate() {
+    if (navigator.vibrate) return navigator.vibrate(200)
   }
 }
