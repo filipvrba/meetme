@@ -53,7 +53,14 @@ export default class ElmMapUserDetails extends HTMLElement {
   };
 
   buttonClick(userId) {
-    return this._cDatabase.startConversation(userId, "HELLO", () => null)
+    return this._cDatabase.startConversation(
+      userId,
+      "HELLO",
+
+      (isStarted) => {
+        if (isStarted) return location.hash = "chat"
+      }
+    )
   };
 
   initElm() {
