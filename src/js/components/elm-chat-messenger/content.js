@@ -20,7 +20,7 @@ export default class CContent {
 
       let mMessage = message.message.decodeBase64().replaceAll(
         "HELLO",
-        "<p style=\"font-size: 48px;\">👋</p>"
+        "👋"
       );
 
       let domImg = `<img src='${avatar}' class='rounded-circle' width='40' height='40' alt='Avatar ${mFullName}' style='margin-${imgStyleMargine}: 12px;'>`;
