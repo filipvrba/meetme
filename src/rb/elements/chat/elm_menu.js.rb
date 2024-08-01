@@ -74,7 +74,7 @@ export default class ElmChatMenu < HTMLElement
       template = """
       <li class='list-group-item d-flex align-items-center' onclick='chatMenuLiClick(#{id})'>
         <div id='chatMenuContainerNotification#{id}' class='notification-display'>
-          <span class='position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle'>
+          <span class='position-absolute translate-middle p-2 bg-danger border border-light rounded-circle' style='left: 50px; bottom: 0px;'>
             <span class='visually-hidden'>New alerts</span>
           </span>
         </div>
