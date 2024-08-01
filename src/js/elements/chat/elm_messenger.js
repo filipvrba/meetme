@@ -14,7 +14,10 @@ export default class ElmChatMessenger extends HTMLElement {
     };
 
     this._hChatNotifications = e => this.chatNotifications(e.detail.value);
-    this._hChatMenuLiClick = e => this.updateInitElm(e.detail.value, true);
+
+    this._hChatMenuLiClick = () => (
+      this.updateInitElm(URLParams.getIndex("m-index"), true)
+    );
 
     this._hBtnClick = () => {
       return this.btnClick()
@@ -27,7 +30,10 @@ export default class ElmChatMessenger extends HTMLElement {
     this.initElm();
     this._containerMessages = this.querySelector("#chatMessengerContainerMessages");
     this._input = this.querySelector("#chatMessengerInput");
-    this._btn = this.querySelector("#chatMessengerBtn")
+    this._btn = this.querySelector("#chatMessengerBtn");
+    this._containerMessenger = this.querySelector(".container-messenger");
+    let idParameter = URLParams.getIndex("m-index");
+    if (idParameter) this._hChatMenuLiClick()
   };
 
   connectedCallback() {
@@ -100,6 +106,7 @@ export default class ElmChatMessenger extends HTMLElement {
     this._id = id;
 
     return this._cDatabase.getAvatarsWithMessages(this._id, (data) => {
+      this._containerMessenger.classList.remove("messenger-display");
       this._cContent = new CContent(data);
       this._containerMessages.innerHTML = this._cContent.subinitElm(this._id);
       return this.scrollDown(sudo)
@@ -108,7 +115,7 @@ export default class ElmChatMessenger extends HTMLElement {
 
   initElm() {
     let template = `${`
-<div class='container-messenger'>
+<div class='container-messenger messenger-display'>
   <div class='col-md-9 p-3 mx-auto d-flex flex-column' style='height: 100%;'>
     <div id='chatMessengerContainerMessages' class='border rounded p-3 mb-3 flex-grow-1' style='overflow-y: auto;'>
     </div>

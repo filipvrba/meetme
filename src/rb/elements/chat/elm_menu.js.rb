@@ -29,8 +29,9 @@ export default class ElmChatMenu < HTMLElement
   end
 
   def chat_menu_li_click(id)
+    URLParams.set('m-index', id)
     Events.emit('#offcanvasChatMenu', 'offcanvas.hide')
-    Events.emit('#app', 'chatMenuLiClick', id)
+    Events.emit('#app', 'chatMenuLiClick')
   end
 
   def chat_update()

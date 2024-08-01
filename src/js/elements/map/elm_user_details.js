@@ -58,7 +58,10 @@ export default class ElmMapUserDetails extends HTMLElement {
       "HELLO",
 
       (isStarted) => {
-        if (isStarted) return location.hash = "chat"
+        if (isStarted) {
+          URLParams.set("m-index", userId);
+          return location.hash = "chat"
+        }
       }
     )
   };

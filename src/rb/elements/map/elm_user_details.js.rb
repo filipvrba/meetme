@@ -58,6 +58,7 @@ export default class ElmMapUserDetails < HTMLElement
   def button_click(user_id)
     @c_database.start_conversation(user_id, "HELLO") do |is_started|
       if is_started
+        URLParams.set('m-index', user_id)
         location.hash = "chat"
       end
     end

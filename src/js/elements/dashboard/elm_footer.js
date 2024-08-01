@@ -4,23 +4,39 @@ export default class ElmDashboardFooter extends HTMLElement {
   constructor() {
     super();
     this._hAlertShow = e => this.alertShow(e.detail.value);
+
+    this._hIconDashboardClick = () => {
+      return this.iconDashboardClick()
+    };
+
     this._userId = this.getAttribute("user-id");
     this.initElm();
+    this._iconDashboard = this.querySelector("#dashboardFooterIconDashboard");
     this._iconMap = this.querySelector("#dashboardFooterIconMap");
     this._iconChat = this.querySelector("#dashboardFooterIconChat");
     this.updateSubinitElm()
   };
 
   connectedCallback() {
-    return Events.connect("#app", ElmAlert.ENVS.SHOW, this._hAlertShow)
+    Events.connect("#app", ElmAlert.ENVS.SHOW, this._hAlertShow);
+
+    return this._iconDashboard.addEventListener(
+      "click",
+      this._hIconDashboardClick
+    )
   };
 
   disconnectedCallback() {
-    return Events.disconnect(
-      "#app",
-      ElmAlert.ENVS.SHOW,
-      this._hAlertShow
+    Events.disconnect("#app", ElmAlert.ENVS.SHOW, this._hAlertShow);
+
+    return this._iconDashboard.removeEventListener(
+      "click",
+      this._hIconDashboardClick
     )
+  };
+
+  iconDashboardClick() {
+    return URLParams.set("m-index", 0)
   };
 
   alertShow(data) {
@@ -33,7 +49,7 @@ export default class ElmDashboardFooter extends HTMLElement {
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
       <div class='col'>
-        <a href='#dashboard' class='text-dark'>
+        <a href='#dashboard' id='dashboardFooterIconDashboard' class='text-dark'>
           <i class='bi bi-speedometer2 icon-large'></i>
         </a>
       </div>

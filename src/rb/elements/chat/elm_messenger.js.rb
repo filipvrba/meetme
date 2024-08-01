@@ -9,7 +9,7 @@ export default class ElmChatMessenger < HTMLElement
     @h_chat_update = lambda { chat_update() }
     @h_chat_notifications = lambda { |e| chat_notifications(e.detail.value) }
 
-    @h_chat_menu_li_click = lambda { |e| update_init_elm(e.detail.value, true) }
+    @h_chat_menu_li_click = lambda { update_init_elm(URLParams.get_index('m-index'), true) }
     @h_btn_click = lambda { btn_click() }
     @h_input_keypress = lambda { |e| input_keypress(e) }
     
@@ -22,6 +22,12 @@ export default class ElmChatMessenger < HTMLElement
     @container_messages = self.query_selector('#chatMessengerContainerMessages')
     @input = self.query_selector('#chatMessengerInput')
     @btn = self.query_selector('#chatMessengerBtn')
+    @container_messenger = self.query_selector('.container-messenger')
+
+    id_parameter = URLParams.get_index('m-index')
+    if id_parameter
+      @h_chat_menu_li_click.call()
+    end
   end
 
   def connected_callback()
@@ -97,6 +103,8 @@ export default class ElmChatMessenger < HTMLElement
     @id = id
 
     @c_database.get_avatars_with_messages(@id) do |data|
+      @container_messenger.class_list.remove('messenger-display')
+
       @c_content = CContent.new(data)
       @container_messages.innerHTML = @c_content.subinit_elm(@id)
       scroll_down(sudo)
@@ -105,7 +113,7 @@ export default class ElmChatMessenger < HTMLElement
 
   def init_elm()
     template = """
-<div class='container-messenger'>
+<div class='container-messenger messenger-display'>
   <div class='col-md-9 p-3 mx-auto d-flex flex-column' style='height: 100%;'>
     <div id='chatMessengerContainerMessages' class='border rounded p-3 mb-3 flex-grow-1' style='overflow-y: auto;'>
     </div>

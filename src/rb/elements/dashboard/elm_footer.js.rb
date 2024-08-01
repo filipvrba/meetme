@@ -3,24 +3,32 @@ import 'ElmAlert', '../elm_alert'
 export default class ElmDashboardFooter < HTMLElement
   def initialize
     super
-    @h_alert_show = lambda { |e| alert_show(e.detail.value) }
+    @h_alert_show           = lambda { |e| alert_show(e.detail.value) }
+    @h_icon_dashboard_click = lambda { icon_dashboard_click() }
 
     @user_id = self.get_attribute('user-id')
 
     init_elm()
 
-    @icon_map  = self.query_selector('#dashboardFooterIconMap')
-    @icon_chat = self.query_selector('#dashboardFooterIconChat')
+    @icon_dashboard = self.query_selector('#dashboardFooterIconDashboard')
+    @icon_map       = self.query_selector('#dashboardFooterIconMap')
+    @icon_chat      = self.query_selector('#dashboardFooterIconChat')
     
     update_subinit_elm()
   end
 
   def connected_callback()
     Events.connect('#app', ElmAlert::ENVS::SHOW, @h_alert_show)
+    @icon_dashboard.add_event_listener('click', @h_icon_dashboard_click)
   end
 
   def disconnected_callback()
     Events.disconnect('#app', ElmAlert::ENVS::SHOW, @h_alert_show)
+    @icon_dashboard.remove_event_listener('click', @h_icon_dashboard_click)
+  end
+
+  def icon_dashboard_click()
+    URLParams.set('m-index', 0)
   end
 
   def alert_show(data)
@@ -35,7 +43,7 @@ export default class ElmDashboardFooter < HTMLElement
   <div class='container-fluid'>
     <div class='row text-center icons-padding'>
       <div class='col'>
-        <a href='#dashboard' class='text-dark'>
+        <a href='#dashboard' id='dashboardFooterIconDashboard' class='text-dark'>
           <i class='bi bi-speedometer2 icon-large'></i>
         </a>
       </div>

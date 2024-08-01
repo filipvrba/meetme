@@ -30,8 +30,9 @@ export default class ElmChatMenu extends HTMLElement {
   };
 
   chatMenuLiClick(id) {
+    URLParams.set("m-index", id);
     Events.emit("#offcanvasChatMenu", "offcanvas.hide");
-    return Events.emit("#app", "chatMenuLiClick", id)
+    return Events.emit("#app", "chatMenuLiClick")
   };
 
   chatUpdate() {
