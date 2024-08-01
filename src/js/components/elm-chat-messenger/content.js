@@ -17,7 +17,12 @@ export default class CContent {
       let secondDivClass = isLeft ? "bg-light" : "bg-primary text-white";
       let [mFullName, avatar] = this.getAvatar(parseInt(message.user_id));
       mFullName = mFullName.decodeBase64();
-      let mMessage = message.message.decodeBase64();
+
+      let mMessage = message.message.decodeBase64().replaceAll(
+        "HELLO",
+        "<p style=\"font-size: 48px;\">👋</p>"
+      );
+
       let domImg = `<img src='${avatar}' class='rounded-circle' width='40' height='40' alt='Avatar ${mFullName}' style='margin-${imgStyleMargine}: 12px;'>`;
       let template = `${`
       <div ${date ? `id='message-${date}'` : ""} class='d-flex ${firtDivClass} mb-3'>

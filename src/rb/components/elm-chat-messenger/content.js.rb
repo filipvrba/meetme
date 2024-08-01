@@ -18,6 +18,7 @@ export default class CContent
       avatar      = get_avatar(message['user_id'].to_i)
       m_full_name = m_full_name.decode_base64()
       m_message   = message['message'].decode_base64()
+                    .gsub('HELLO', '<p style="font-size: 48px;">👋</p>')
 
       dom_img = "<img src='#{avatar}' class='rounded-circle' width='40' height='40' alt='Avatar #{m_full_name}' style='margin-#{img_style_margine}: 12px;'>"
 
