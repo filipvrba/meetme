@@ -138,8 +138,7 @@ export default class ElmChatMessenger < HTMLElement
 
     if max_scroll - current_scroll <= 100 || sudo
       @container_messages.scroll_to({
-        top: @container_messages.scroll_height,
-        behavior: 'smooth'
+        top: @container_messages.scroll_height
       })
     end
   end

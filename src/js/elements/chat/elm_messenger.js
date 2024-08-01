@@ -138,10 +138,7 @@ export default class ElmChatMessenger extends HTMLElement {
     let maxScroll = this._containerMessages.scrollHeight;
 
     if (maxScroll - currentScroll <= 100 || sudo) {
-      return this._containerMessages.scrollTo({
-        top: this._containerMessages.scrollHeight,
-        behavior: "smooth"
-      })
+      return this._containerMessages.scrollTo({top: this._containerMessages.scrollHeight})
     }
   };
 
