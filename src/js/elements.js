@@ -62,4 +62,10 @@ window.customElements.define("elm-chat-menu", ElmChatMenu);
 import ElmChatHeader from "./elements/chat/elm_header";
 window.customElements.define("elm-chat-header", ElmChatHeader);
 import ElmChatMessenger from "./elements/chat/elm_messenger";
-window.customElements.define("elm-chat-messenger", ElmChatMessenger)
+window.customElements.define("elm-chat-messenger", ElmChatMessenger);
+import ElmDashboardHeaderAccount from "./elements/dashboard/header/elm_account";
+
+window.customElements.define(
+  "elm-dashboard-header-account",
+  ElmDashboardHeaderAccount
+)

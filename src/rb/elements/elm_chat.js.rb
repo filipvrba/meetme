@@ -13,7 +13,7 @@ export default class ElmChat < AProtectionElement
 
   def init_elm()
     template = """
-    <elm-chat-header></elm-chat-header>
+    <elm-chat-header user-id='#{@user_id}'></elm-chat-header>
     <elm-chat-menu user-id='#{@user_id}'></elm-chat-menu>
     <elm-chat-messenger user-id='#{@user_id}'></elm-chat-messenger>
     <elm-dashboard-footer user-id='#{@user_id}'></elm-dashboard-footer>

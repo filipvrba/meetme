@@ -1,6 +1,7 @@
 export default class ElmChatHeader extends HTMLElement {
   constructor() {
     super();
+    this._userId = this.getAttribute("user-id");
     this.initElm()
   };
 
@@ -24,7 +25,10 @@ export default class ElmChatHeader extends HTMLElement {
     <div class='col-4 text-center'>
       <h3 class='m-0'>Chat</h3>
     </div>
-    <div class='col-4'>
+    <div class='col-4 d-flex'>
+      <div class='ms-auto'>
+        <elm-dashboard-header-account user-id='${this._userId}'></elm-dashboard-header-account>
+      </div>
     </div>
   </div>
 </nav>

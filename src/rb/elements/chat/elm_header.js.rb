@@ -2,6 +2,8 @@ export default class ElmChatHeader < HTMLElement
   def initialize
     super
     
+    @user_id = self.get_attribute('user-id')
+
     init_elm()
   end
 
@@ -23,7 +25,10 @@ export default class ElmChatHeader < HTMLElement
     <div class='col-4 text-center'>
       <h3 class='m-0'>Chat</h3>
     </div>
-    <div class='col-4'>
+    <div class='col-4 d-flex'>
+      <div class='ms-auto'>
+        <elm-dashboard-header-account user-id='#{@user_id}'></elm-dashboard-header-account>
+      </div>
     </div>
   </div>
 </nav>
