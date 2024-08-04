@@ -33,6 +33,7 @@ class Database
         callback(data) if callback
       end
     end 
+    
 
     if low_query.indexOf('insert into') > -1 ||
       low_query.indexOf('create table') > -1
