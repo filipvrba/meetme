@@ -16,8 +16,6 @@ export default async function handler(req, res) {
 
   // Funkce pro zpracování POST, DELETE, PATCH požadavků
   async function handleRequest(method, query) {
-    console.log(method, query);
-
     try {
       const response = await fetch(URL_API, {
         method,
