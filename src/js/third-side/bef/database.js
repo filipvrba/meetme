@@ -6,7 +6,8 @@ class Database {
   };
 
   constructor() {
-    this._isVerbose = true
+    this._isVerbose = true;
+    this._mode = ENV.MODE
   };
 
   query(query, method, callback) {
@@ -21,12 +22,31 @@ class Database {
   };
 
   get(query, callback) {
-    return this.query(query, "get", (data) => {
+    return this._mode === "development" ? this.devGet(query, (data) => {
+      if (callback) return callback(data)
+    }) : this.query(query, "get", (data) => {
       if (callback) return callback(data)
     })
   };
 
   set(query, callback) {
+    return this._mode === "development" ? this.devSet(query, (data) => {
+      if (callback) return callback(data)
+    }) : this.prodSet(query, (data) => {
+      if (callback) return callback(data)
+    })
+  };
+
+  devGet(query, callback) {
+    let queryEncode = encodeURIComponent(query);
+    let uri = `${ENV.VITE_URL_API}?token=${ENV.VITE_BEF_CLIENT}&database=${ENV.VITE_DATABASE}&query=${queryEncode}`;
+
+    return Net.befJson(uri, (data) => {
+      if (callback) return callback(data)
+    })
+  };
+
+  prodSet(query, callback) {
     let lowQuery = query.toLowerCase();
 
     let lQuery = method => (
@@ -50,6 +70,33 @@ class Database {
     } else if (lowQuery.indexOf("update") > -1) {
       return lQuery("patch")
     }
+  };
+
+  devSet(query, callback) {
+    let isActive = false;
+    let lowQuery = query.toLowerCase();
+
+    if (lowQuery.indexOf("insert into") > -1 || lowQuery.indexOf("create table") > -1) {
+      isActive = true;
+
+      Net.befSend("post", query, this._isVerbose, (data) => {
+        if (callback) return callback(data)
+      })
+    } else if (lowQuery.indexOf("delete") > -1) {
+      isActive = true;
+
+      Net.befSend("delete", query, this._isVerbose, (data) => {
+        if (callback) return callback(data)
+      })
+    } else if (lowQuery.indexOf("update") > -1) {
+      isActive = true;
+
+      Net.befSend("patch", query, this._isVerbose, (data) => {
+        if (callback) return callback(data)
+      })
+    };
+
+    return isActive
   }
 };
 

@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  return {
-    server: {
-      proxy: {
-        '/api': {
-          target: mode === 'development' ? 'http://localhost:3000' : 'https://meetme-three.vercel.app',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+  if (mode === 'production') {
+    return {
+      server: {
+        proxy: {
+          '/api': {
+            target: 'https://meetme-three.vercel.app',
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/api/, ''),
+          },
         },
       },
-    },
-  };
+    };
+  }
+  
+  return {};
 });
