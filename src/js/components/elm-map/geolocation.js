@@ -29,6 +29,14 @@ export default class CGeolocation {
   };
 
   error(message) {
-    return alert(`Unable to retrieve your location (${message.code}).`)
+    switch (message.code) {
+    case 1:
+      alert("Prosím, zapněte GPS pro získání vaší polohy.");
+      return;
+
+    default:
+      alert(`Unable to retrieve your location (${message.code}).`);
+      return
+    }
   }
 }

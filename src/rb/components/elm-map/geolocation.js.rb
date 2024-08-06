@@ -27,6 +27,13 @@ export default class CGeolocation
   end
 
   def error(message)
-    alert("Unable to retrieve your location (#{message.code}).")
+    case message.code
+    when 1
+      alert("Prosím, zapněte GPS pro získání vaší polohy.");
+      return
+    else
+      alert("Unable to retrieve your location (#{message.code}).")
+      return
+    end
   end
 end
