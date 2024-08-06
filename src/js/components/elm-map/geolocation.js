@@ -1,3 +1,5 @@
+import ElmMapGeolocationAlert from "../../elements/map/elm_geolocation_alert";
+
 export default class CGeolocation {
   constructor() {
     this._hSuccess = p => this.success(p);
@@ -25,18 +27,15 @@ export default class CGeolocation {
     let lng = position.coords.longitude;
     let lat = position.coords.latitude;
     position = new Vector(lng, lat);
+    Events.emit("#app", ElmMapGeolocationAlert.ENVS.hide);
     if (this._callbackPosition) return this._callbackPosition(position)
   };
 
   error(message) {
-    switch (message.code) {
-    case 1:
-      alert("Prosím, zapněte GPS pro získání vaší polohy.");
-      return;
-
-    default:
-      alert(`Unable to retrieve your location (${message.code}).`);
-      return
-    }
+    return Events.emit(
+      "#app",
+      ElmMapGeolocationAlert.ENVS.show,
+      message.code
+    )
   }
 }

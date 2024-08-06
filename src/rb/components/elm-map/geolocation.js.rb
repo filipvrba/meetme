@@ -1,3 +1,5 @@
+import 'ElmMapGeolocationAlert', '../../elements/map/elm_geolocation_alert'
+
 export default class CGeolocation
   def initialize
     @h_success = lambda { |p| success(p) }
@@ -23,17 +25,11 @@ export default class CGeolocation
     lat = position.coords.latitude
     position = Vector.new(lng, lat)
 
+    Events.emit('#app', ElmMapGeolocationAlert::ENVS.hide)
     @callback_position.call(position) if @callback_position
   end
 
   def error(message)
-    case message.code
-    when 1
-      alert("Prosím, zapněte GPS pro získání vaší polohy.");
-      return
-    else
-      alert("Unable to retrieve your location (#{message.code}).")
-      return
-    end
+    Events.emit('#app', ElmMapGeolocationAlert::ENVS.show, message.code)
   end
 end

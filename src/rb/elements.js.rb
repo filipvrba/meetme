@@ -52,3 +52,6 @@ window.custom_elements.define('elm-chat-messenger', ElmChatMessenger)
 
 import 'ElmDashboardHeaderAccount', './elements/dashboard/header/elm_account'
 window.custom_elements.define('elm-dashboard-header-account', ElmDashboardHeaderAccount)
+
+import 'ElmMapGeolocationAlert', './elements/map/elm_geolocation_alert'
+window.custom_elements.define('elm-map-geolocation-alert', ElmMapGeolocationAlert)

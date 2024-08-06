@@ -11,12 +11,8 @@ export default class Events {
   };
 
   static disconnect(dom, event, callback) {
-    if (callback) {
-      return document.querySelector(dom).removeEventListener(
-        event,
-        callback
-      )
-    }
+    let element = document.querySelector(dom);
+    if (element) if (callback) return element.removeEventListener(event, callback)
   }
 };
 

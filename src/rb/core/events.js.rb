@@ -14,7 +14,11 @@ export default class Events
   end
 
   def self.disconnect(dom, event, &callback)
-    document.query_selector(dom).remove_event_listener(event, callback) if callback
+    element = document.query_selector(dom)
+    
+    if element
+      element.remove_event_listener(event, callback) if callback
+    end
   end
 end
 window.Events = Events

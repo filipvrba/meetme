@@ -86,6 +86,7 @@ export default class ElmMap extends AProtectionElement {
 
   initElm() {
     let template = `${`
+<elm-map-geolocation-alert></elm-map-geolocation-alert>
 <elm-map-user-details user-id='${this._userId}'></elm-map-user-details>
 <div id='map'></div>
 <elm-dashboard-footer user-id='${this._userId}'></elm-dashboard-footer>

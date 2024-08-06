@@ -68,4 +68,11 @@ import ElmDashboardHeaderAccount from "./elements/dashboard/header/elm_account";
 window.customElements.define(
   "elm-dashboard-header-account",
   ElmDashboardHeaderAccount
+);
+
+import ElmMapGeolocationAlert from "./elements/map/elm_geolocation_alert";
+
+window.customElements.define(
+  "elm-map-geolocation-alert",
+  ElmMapGeolocationAlert
 )

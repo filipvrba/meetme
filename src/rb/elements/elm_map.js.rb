@@ -70,6 +70,7 @@ export default class ElmMap < AProtectionElement
 
   def init_elm()
     template = """
+<elm-map-geolocation-alert></elm-map-geolocation-alert>
 <elm-map-user-details user-id='#{@user_id}'></elm-map-user-details>
 <div id='map'></div>
 <elm-dashboard-footer user-id='#{@user_id}'></elm-dashboard-footer>
