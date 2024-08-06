@@ -19,7 +19,7 @@ export default class CGeolocation {
         options
       )
     } else {
-      return alert("Geolocation is not supported by this browser.")
+      return Events.emit("#app", ElmMapGeolocationAlert.ENVS.show, -1)
     }
   };
 

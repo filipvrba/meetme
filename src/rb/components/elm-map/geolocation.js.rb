@@ -16,7 +16,7 @@ export default class CGeolocation
       }
       navigator.geolocation.get_current_position(@h_success, error, options)
     else
-      alert("Geolocation is not supported by this browser.")
+      Events.emit('#app', ElmMapGeolocationAlert::ENVS.show, -1)
     end
   end
 

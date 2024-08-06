@@ -72,8 +72,10 @@ export default class ElmMapGeolocationAlert extends HTMLElement {
 
     if (code === 1) {
       this._modalMessage.innerHTML = "Prosím, zapněte GPS pro získání vaší polohy."
+    } else if (code = -1) {
+      this._modalMessage.innerHTML = "Geolokace není tímto prohlížečem podporována."
     } else {
-      this._modalMessage.innerHTML = `Unable to retrieve your location (code ${message.code}).`
+      this._modalMessage.innerHTML = `Není možné získat vaši polohu (code ${message.code}).`
     };
 
     return this._noneBtn.click()

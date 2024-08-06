@@ -15,7 +15,7 @@ export default class ElmMapGeolocationAlert < HTMLElement
 
     init_elm()
 
-    @none_btn = self.query_selector('#geolocationAlertBtn')
+    @none_btn      = self.query_selector('#geolocationAlertBtn')
     @modal_message = self.query_selector('#mapGeoAlertModalMessage')
   end
 
@@ -42,8 +42,10 @@ export default class ElmMapGeolocationAlert < HTMLElement
     
     if code == 1
       @modal_message.innerHTML = "Prosím, zapněte GPS pro získání vaší polohy."
+    elsif code = -1
+      @modal_message.innerHTML = "Geolokace není tímto prohlížečem podporována."
     else
-      @modal_message.innerHTML = "Unable to retrieve your location (code #{message.code})."
+      @modal_message.innerHTML = "Není možné získat vaši polohu (code #{message.code})."
     end
 
     @none_btn.click()
