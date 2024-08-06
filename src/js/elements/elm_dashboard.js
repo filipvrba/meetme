@@ -19,7 +19,7 @@ export default class ElmDashboard extends AProtectionElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    return this._cBody.disconnectedCallback()
+    if (this._cBody) return this._cBody.disconnectedCallback()
   };
 
   initElm() {

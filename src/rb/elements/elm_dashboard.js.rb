@@ -20,7 +20,7 @@ export default class ElmDashboard < AProtectionElement
 
   def disconnected_callback()
     super
-    @c_body.disconnected_callback()
+    @c_body.disconnected_callback() if @c_body
   end
 
   def init_elm()
