@@ -138,7 +138,7 @@ export default class ElmChatMessenger extends HTMLElement {
 <div id='containerGreeting' class='container-greeting'>
   <div class='text-center'>
     <i class='bi bi-menu-button h2'></i>
-    <p class='lead'>Tato ikona představuje otevření nabídky pro uživatele, se kterými si píšete.</p>
+    <p class='lead'>Tato ikona představuje otevření nabídky uživatelů, se kterými si píšete.</p>
   </div>
 </div>
     `}`;
