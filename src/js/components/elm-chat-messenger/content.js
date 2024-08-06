@@ -23,7 +23,7 @@ export default class CContent {
         "👋"
       ).replaceAll(
         /https?:\/\/([^\s]+)/g,
-        "<a href=\"$&\" target='_blank'>$&</a>"
+        "<a href=\"$&\" class='text-white' target='_blank'>$&</a>"
       );
 
       let domImg = `<img src='${avatar}' class='rounded-circle' width='40' height='40' alt='Avatar ${mFullName}' style='margin-${imgStyleMargine}: 12px;'>`;

@@ -19,7 +19,7 @@ export default class CContent
       m_full_name = m_full_name.decode_base64()
       m_message   = message['message'].decode_base64()
                     .gsub('HELLO', '👋')
-                    .gsub(/https?:\/\/([^\s]+)/, "<a href=\"$&\" target='_blank'>$&</a>")
+                    .gsub(/https?:\/\/([^\s]+)/, "<a href=\"$&\" class='text-white' target='_blank'>$&</a>")
 
       dom_img = "<img src='#{avatar}' class='rounded-circle' width='40' height='40' alt='Avatar #{m_full_name}' style='margin-#{img_style_margine}: 12px;'>"
 
