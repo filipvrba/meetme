@@ -1,12 +1,26 @@
 export default class CBody {
   constructor(userId) {
     this._userId = userId;
-    window.dashboardUpdate = this.dashboardUpdate.bind(this)
+
+    this._hDashboardUpdateBody = () => {
+      return this.updateSubinitElm()
+    }
   };
 
-  dashboardUpdate(index=null) {
-    if (index !== null) URLParams.set("d-index", index);
-    return this.updateSubinitElm()
+  connectedCallback() {
+    return Events.connect(
+      "#app",
+      "dashboardUpdateBody",
+      this._hDashboardUpdateBody
+    )
+  };
+
+  disconnectedCallback() {
+    return Events.disconnect(
+      "#app",
+      "dashboardUpdateBody",
+      this._hDashboardUpdateBody
+    )
   };
 
   updateSubinitElm() {

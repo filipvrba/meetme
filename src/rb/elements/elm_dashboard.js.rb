@@ -8,9 +8,10 @@ export default class ElmDashboard < AProtectionElement
 
   def initialize_protected()
     @c_body = CBody.new(@user_id)
+    @c_body.connected_callback()
     
     init_elm()
-    @c_body.dashboard_update()
+    window.dashboard_update()
   end
 
   def connected_callback()
@@ -19,6 +20,7 @@ export default class ElmDashboard < AProtectionElement
 
   def disconnected_callback()
     super
+    @c_body.disconnected_callback()
   end
 
   def init_elm()

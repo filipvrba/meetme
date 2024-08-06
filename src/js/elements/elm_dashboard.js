@@ -8,8 +8,9 @@ export default class ElmDashboard extends AProtectionElement {
 
   initializeProtected() {
     this._cBody = new CBody(this._userId);
+    this._cBody.connectedCallback();
     this.initElm();
-    return this._cBody.dashboardUpdate()
+    return window.dashboardUpdate()
   };
 
   connectedCallback() {
@@ -17,7 +18,8 @@ export default class ElmDashboard extends AProtectionElement {
   };
 
   disconnectedCallback() {
-    return super.disconnectedCallback()
+    super.disconnectedCallback();
+    return this._cBody.disconnectedCallback()
   };
 
   initElm() {

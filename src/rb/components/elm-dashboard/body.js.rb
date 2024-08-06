@@ -2,12 +2,15 @@ export default class CBody
   def initialize(user_id)
     @user_id = user_id
 
-    window.dashboard_update = dashboard_update
+    @h_dashboard_update_body = lambda { update_subinit_elm() }
   end
 
-  def dashboard_update(index = nil)
-    URLParams.set('d-index', index) if index != nil
-    update_subinit_elm()
+  def connected_callback()
+    Events.connect('#app', 'dashboardUpdateBody', @h_dashboard_update_body)
+  end
+
+  def disconnected_callback()
+    Events.disconnect('#app', 'dashboardUpdateBody', @h_dashboard_update_body)
   end
 
   def update_subinit_elm()
