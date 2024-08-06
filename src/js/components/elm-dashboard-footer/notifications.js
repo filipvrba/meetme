@@ -36,26 +36,12 @@ export default class CNotifications {
     return this._timeoutId
   };
 
-  // Notification.requestPermission().then(lambda do|permission|
-  //   if permission === "granted"
-  //         notification = Notification.new("Nové oznámení", {
-    //             body: "Toto je příklad oznámení.",
-    //             # icon: "https://example.com/icon.png"
-    //         })
-    //         # // Ošetření události kliknutí na oznámení
-    //         # notification.onclick = function(event) {
-      //         #     event.preventDefault(); // Zabráníme defaultnímu chování
-      //         #     window.open("https://example.com", "_blank"); // Otevře URL
-      //         # };
-      //   end
-      // end)
-      sign() {
-        this.playSound();
-        return new Notification("Nové oznámení", {body: "Toto je příklad oznámení."})
-      };
+  sign() {
+    return this.playSound()
+  };
 
-      playSound() {
-        let audio = new Audio("/mp3/message.mp3");
-        return audio.play()
-      }
-    }
+  playSound() {
+    let audio = new Audio("/mp3/message.mp3");
+    return audio.play()
+  }
+}
