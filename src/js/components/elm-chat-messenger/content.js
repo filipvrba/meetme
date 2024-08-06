@@ -21,6 +21,9 @@ export default class CContent {
       let mMessage = message.message.decodeBase64().replaceAll(
         "HELLO",
         "👋"
+      ).replaceAll(
+        /https?:\/\/([^\s]+)/g,
+        "<a href=\"$&\" target='_blank'>$&</a>"
       );
 
       let domImg = `<img src='${avatar}' class='rounded-circle' width='40' height='40' alt='Avatar ${mFullName}' style='margin-${imgStyleMargine}: 12px;'>`;
@@ -28,7 +31,7 @@ export default class CContent {
       <div ${date ? `id='message-${date}'` : ""} class='d-flex ${firtDivClass} mb-3'>
         ${isLeft ? domImg : ""}
         <div class='${secondDivClass} rounded p-2'>
-          <p class='mb-0'>${mMessage}</p>
+          <p class='mb-0' style='word-break: break-all;'>${mMessage}</p>
         </div>
         ${isLeft ? "" : domImg}
       </div>

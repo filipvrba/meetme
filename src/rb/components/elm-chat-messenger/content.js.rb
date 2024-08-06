@@ -19,6 +19,7 @@ export default class CContent
       m_full_name = m_full_name.decode_base64()
       m_message   = message['message'].decode_base64()
                     .gsub('HELLO', '👋')
+                    .gsub(/https?:\/\/([^\s]+)/, "<a href=\"$&\" target='_blank'>$&</a>")
 
       dom_img = "<img src='#{avatar}' class='rounded-circle' width='40' height='40' alt='Avatar #{m_full_name}' style='margin-#{img_style_margine}: 12px;'>"
 
@@ -26,7 +27,7 @@ export default class CContent
       <div #{date ? "id='message-#{date}'" : ''} class='d-flex #{firt_div_class} mb-3'>
         #{is_left ? dom_img : ''}
         <div class='#{second_div_class} rounded p-2'>
-          <p class='mb-0'>#{m_message}</p>
+          <p class='mb-0' style='word-break: break-all;'>#{m_message}</p>
         </div>
         #{is_left ? '' : dom_img}
       </div>
