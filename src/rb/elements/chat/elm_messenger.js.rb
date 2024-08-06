@@ -22,7 +22,8 @@ export default class ElmChatMessenger < HTMLElement
     @container_messages = self.query_selector('#chatMessengerContainerMessages')
     @input = self.query_selector('#chatMessengerInput')
     @btn = self.query_selector('#chatMessengerBtn')
-    @container_messenger = self.query_selector('.container-messenger')
+    @container_messenger = self.query_selector('#containerMessenger')
+    @container_greeting  = self.query_selector('#containerGreeting')
 
     id_parameter = URLParams.get_index('m-index')
     if id_parameter
@@ -103,6 +104,8 @@ export default class ElmChatMessenger < HTMLElement
     @id = id
 
     @c_database.get_avatars_with_messages(@id) do |data|
+      @container_greeting.class_list.remove('container-greeting')
+      @container_greeting.class_list.add('messenger-display')
       @container_messenger.class_list.remove('messenger-display')
 
       @c_content = CContent.new(data)
@@ -113,7 +116,9 @@ export default class ElmChatMessenger < HTMLElement
 
   def init_elm()
     template = """
-<div class='container-messenger messenger-display'>
+
+
+<div id='containerMessenger' class='container-messenger messenger-display'>
   <div class='col-md-9 p-3 mx-auto d-flex flex-column' style='height: 100%;'>
     <div id='chatMessengerContainerMessages' class='border rounded p-3 mb-3 flex-grow-1' style='overflow-y: auto;'>
     </div>
@@ -125,6 +130,13 @@ export default class ElmChatMessenger < HTMLElement
       </div>
     </div>
 
+  </div>
+</div>
+
+<div id='containerGreeting' class='container-greeting'>
+  <div class='text-center'>
+    <i class='bi bi-menu-button h2'></i>
+    <p class='lead'>Tato ikona představuje otevření nabídky pro uživatele, se kterými si píšete.</p>
   </div>
 </div>
     """

@@ -11,3 +11,10 @@
 elm-chat-messenger .messenger-display {
     display: none;
 }
+
+elm-chat-messenger .container-greeting {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
