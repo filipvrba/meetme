@@ -39,18 +39,35 @@ export default class CFiles {
     let img = new Image;
 
     img.onload = (e) => {
+      let squareCanvas = document.createElement("canvas");
+      let squareCtx = squareCanvas.getContext("2d");
+      let size = Math.min(img.width, img.height);
+      squareCanvas.width = size;
+      squareCanvas.height = size;
+      let offsetX = (img.width - size) / 2;
+      let offsetY = (img.height - size) / 2;
+
+      squareCtx.drawImage(
+        img,
+        offsetX,
+        offsetY,
+        size,
+        size,
+        0,
+        0,
+        size,
+        size
+      );
+
+      // resize 256px
       let canvas = document.getElementById("canvas");
       let ctx = canvas.getContext("2d");
-      let targetWidth = 256;
-      let targetHeight = 256;
-      canvas.width = targetWidth;
-      canvas.height = targetHeight;
+      canvas.width = 256;
+      canvas.height = 256;
 
-      return pica().resize(
-        img,
-        canvas,
-        {width: targetWidth, height: targetHeight}
-      ).then(result => pica().toBlob(result, "image/jpeg", 0.9)).then((blob) => {
+      return pica().resize(squareCanvas, canvas).then(result => (
+        pica().toBlob(result, "image/jpeg", 0.9)
+      )).then((blob) => {
         let reader = new FileReader;
 
         reader.onloadend = () => {

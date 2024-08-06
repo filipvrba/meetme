@@ -30,19 +30,25 @@ export default class CFiles
   def resize_image(file_result, &callback)
     img = Image.new
     img.onload = lambda do |e|
+
+      square_canvas = document.create_element("canvas")
+      square_ctx = squareCanvas.get_context("2d")
+      size = Math.min(img.width, img.height)
+      square_canvas.width  = size
+      square_canvas.height = size
+      offset_x = (img.width - size) / 2
+      offset_y = (img.height - size) / 2
+      square_ctx.draw_image(img, offset_x, offset_y, size, size, 0, 0, size, size)
+
+
+
+      # resize 256px
       canvas = document.get_element_by_id('canvas')
-      ctx = canvas.get_context('2d')
-      
-      target_width = 256
-      target_height = 256
+      ctx    = canvas.get_context('2d')
+      canvas.width  = 256
+      canvas.height = 256
 
-      canvas.width = target_width;
-      canvas.height = target_height;
-
-      pica().resize(img, canvas, {
-        width: target_width,
-        height: target_height
-      })
+      pica().resize(square_canvas, canvas)
       .then(lambda do |result|
         return pica().to_blob(result, 'image/jpeg', 0.90)
       end)
