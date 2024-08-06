@@ -37,7 +37,14 @@ export default class CNotifications {
   };
 
   sign() {
-    return this.playSound()
+    this.playSound();
+
+    return Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        let notification = new Notification("Nové oznámení", {body: "Toto je příklad oznámení."});
+        return notification
+      }
+    })
   };
 
   playSound() {
